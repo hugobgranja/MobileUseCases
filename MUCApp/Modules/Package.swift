@@ -18,9 +18,18 @@ package.targets.append(contentsOf: [
         dependencies: ["SecureStorageAPI"],
         path: "SecureStorage/Sources/Impl"
     ),
+    .target(
+        name: "SecureStorageMocks",
+        dependencies: ["SecureStorageAPI"],
+        path: "SecureStorage/Mocks"
+    ),
     .testTarget(
         name: "SecureStorageTests",
-        dependencies: ["SecureStorageImpl"],
+        dependencies: [
+            "SecureStorageAPI",
+            "SecureStorageImpl",
+            "SecureStorageMocks"
+        ],
         path: "SecureStorage/Tests"
     )
 ])

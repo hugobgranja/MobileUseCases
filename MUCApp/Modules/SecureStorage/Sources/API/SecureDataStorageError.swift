@@ -1,6 +1,6 @@
 import Foundation
 
-public enum SecureDataStorageError: Error {
+public enum SecureDataStorageError: Error, Equatable {
     case setFailed(status: OSStatus)
     case dataExceedsMaximumSize
     case getFailed(status: OSStatus)
