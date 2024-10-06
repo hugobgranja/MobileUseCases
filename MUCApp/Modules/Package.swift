@@ -7,32 +7,32 @@ let package = Package(
     platforms: [.iOS(.v18)]
 )
 
-// MARK: Storage
+// MARK: SecureStorage
 package.targets.append(contentsOf: [
     .target(
-        name: "StorageAPI",
-        path: "Storage/Sources/API"
+        name: "SecureStorageAPI",
+        path: "SecureStorage/Sources/API"
     ),
     .target(
-        name: "StorageImpl",
-        dependencies: ["StorageAPI"],
-        path: "Storage/Sources/Impl"
+        name: "SecureStorageImpl",
+        dependencies: ["SecureStorageAPI"],
+        path: "SecureStorage/Sources/Impl"
     ),
     .testTarget(
-        name: "StorageTests",
-        dependencies: ["StorageImpl"],
-        path: "Storage/Tests"
+        name: "SecureStorageTests",
+        dependencies: ["SecureStorageImpl"],
+        path: "SecureStorage/Tests"
     )
 ])
 
 package.products.append(contentsOf: [
     .library(
-        name: "StorageAPI",
-        targets: ["StorageAPI"]
+        name: "SecureStorageAPI",
+        targets: ["SecureStorageAPI"]
     ),
     .library(
-        name: "StorageImpl",
-        targets: ["StorageImpl"]
+        name: "SecureStorageImpl",
+        targets: ["SecureStorageImpl"]
     )
 ])
 
@@ -44,7 +44,7 @@ package.targets.append(contentsOf: [
     ),
     .target(
         name: "MUCImpl",
-        dependencies: ["MUCAPI", "StorageAPI"],
+        dependencies: ["MUCAPI", "SecureStorageAPI"],
         path: "MUC/Sources/Impl"
     ),
     .testTarget(
