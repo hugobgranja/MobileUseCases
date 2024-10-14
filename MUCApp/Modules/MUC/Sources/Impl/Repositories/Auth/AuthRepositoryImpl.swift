@@ -1,27 +1,27 @@
 import Foundation
 import MUCAPI
-import StorageAPI
+import SecureStorageAPI
 
-public actor AuthRepository {
+public actor AuthRepositoryImpl: AuthRepository {
     private let tokenKey: String = "accessToken"
     private let tokenExpirationMargin: TimeInterval = 300
     private let endpoints: MUCEndpoints
     private let client: MUCClient
-    private let storage: SecureStorage
+    private let storage: AsyncSecureStorage
     private var token: Token?
     private var tokenTask: Task<Token, Error>?
     
-    init(
+    public init(
         endpoints: MUCEndpoints,
         client: MUCClient,
-        storage: SecureStorage
+        storage: AsyncSecureStorage
     ) {
         self.endpoints = endpoints
         self.client = client
         self.storage = storage
     }
     
-    func login(email: String, password: String) async throws {
+    public func login(email: String, password: String) async throws {
         if tokenTask == nil {
             let url = endpoints.login
             let request = LoginRequest(email: email, password: password)
@@ -31,7 +31,7 @@ public actor AuthRepository {
                 response = try await client.request(url: url, method: .post, body: request)
                 
                 let token = response.decodedData.toToken()
-                setToken(response.decodedData.toToken())
+                await setToken(response.decodedData.toToken())
                 
                 return token
             }
@@ -42,9 +42,9 @@ public actor AuthRepository {
         _ = try await tokenTask?.value
     }
     
-    func getAccessToken() async throws -> String {
+    public func getAccessToken() async throws -> String {
         guard
-            let token = getCachedToken()
+            let token = await getCachedToken()
         else {
             throw AuthRepositoryError.loginRequired
         }
@@ -60,13 +60,14 @@ public actor AuthRepository {
         }
     }
     
-    private func setToken(_ token: Token) {
+    private func setToken(_ token: Token) async {
         self.token = token
-        try? storage.set(key: tokenKey, value: token)
+        try? await storage.set(key: tokenKey, value: token)
     }
     
-    private func getCachedToken() -> Token? {
-        return try? token ?? storage.get(key: tokenKey, type: Token.self)
+    private func getCachedToken() async -> Token? {
+        if let token { return token }
+        return try? await storage.get(key: tokenKey, type: Token.self)
     }
     
     private func isAccessTokenValid() -> Bool {
@@ -91,7 +92,7 @@ public actor AuthRepository {
                 response = try await client.request(url: url, method: .post, body: request)
                 
                 let token = response.decodedData.toToken()
-                setToken(token)
+                await setToken(token)
                 
                 return token
             }

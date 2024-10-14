@@ -5,7 +5,7 @@ import SecureStorageMocks
 import Testing
 
 struct AsyncSecureStorageTests {
-    struct TestData: Codable, Equatable {
+    struct Token: Codable, Equatable {
         let accessToken: String
         let expirationDate: Date
     }
@@ -25,36 +25,36 @@ struct AsyncSecureStorageTests {
     
     @Test("Get returns expected data")
     func getWhenDataSet() async throws {
-        let testData = TestData(accessToken: "Test", expirationDate: Date.now)
+        let token = Token(accessToken: "Test", expirationDate: Date.now)
         let testKey = "Test"
-        try await sut.set(key: testKey, value: testData)
-        let returnedData = try await sut.get(key: testKey, type: TestData.self)
-        #expect(testData == returnedData)
+        try await sut.set(key: testKey, value: token)
+        let returnedToken = try await sut.get(key: testKey, type: Token.self)
+        #expect(token == returnedToken)
     }
     
     @Test("Get returns nil if no data set")
     func getWhenNoDataSet() async throws {
         let testKey = "Test"
-        let returnedData = try await sut.get(key: testKey, type: TestData.self)
-        #expect(returnedData == nil)
+        let returnedToken = try await sut.get(key: testKey, type: Token.self)
+        #expect(returnedToken == nil)
     }
     
     @Test("Delete removes correct data")
     func deleteSuccess() async throws {
-        let testData = TestData(accessToken: "Test", expirationDate: Date.now)
+        let token = Token(accessToken: "Test", expirationDate: Date.now)
         let testKey = "Test"
         
-        let deleteData = TestData(accessToken: "Delete", expirationDate: Date.now)
+        let deleteData = Token(accessToken: "Delete", expirationDate: Date.now)
         let deleteKey = "Delete"
         
-        try await sut.set(key: testKey, value: testData)
+        try await sut.set(key: testKey, value: token)
         try await sut.set(key: deleteKey, value: deleteData)
         try await sut.delete(key: deleteKey)
         
-        let unchangedData = try await sut.get(key: testKey, type: TestData.self)
+        let unchangedData = try await sut.get(key: testKey, type: Token.self)
         #expect(unchangedData != nil)
         
-        let deletedData = try await sut.get(key: deleteKey, type: TestData.self)
+        let deletedData = try await sut.get(key: deleteKey, type: Token.self)
         #expect(deletedData == nil)
     }
 }

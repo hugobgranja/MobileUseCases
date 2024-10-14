@@ -1,16 +1,17 @@
 import Foundation
+import MUCAPI
 
-final class MUCClientImpl: MUCClient {
-    private let urlSession: URLSession
+final class MUCBaseClient: MUCClient {
+    private let urlRequester: URLRequester
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
     
     init(
-        urlSession: URLSession,
+        urlRequester: URLRequester,
         encoder: JSONEncoder,
         decoder: JSONDecoder
     ) {
-        self.urlSession = urlSession
+        self.urlRequester = urlRequester
         self.encoder = encoder
         self.decoder = decoder
     }
@@ -27,7 +28,7 @@ final class MUCClientImpl: MUCClient {
             headers: headers
         )
         
-        let (_, response) = try await urlSession.data(for: request)
+        let (_, response) = try await urlRequester.data(for: request)
         return makeResponse(response: response)
     }
     
@@ -43,7 +44,7 @@ final class MUCClientImpl: MUCClient {
             headers: headers
         )
         
-        let (data, response) = try await urlSession.data(for: request)
+        let (data, response) = try await urlRequester.data(for: request)
         return try makeResponse(data: data, response: response)
     }
     
@@ -61,7 +62,7 @@ final class MUCClientImpl: MUCClient {
             headers: headers
         )
         
-        let (_, response) = try await urlSession.data(for: request)
+        let (_, response) = try await urlRequester.data(for: request)
         return makeResponse(response: response)
     }
     
@@ -79,7 +80,7 @@ final class MUCClientImpl: MUCClient {
             headers: headers
         )
         
-        let (data, response) = try await urlSession.data(for: request)
+        let (data, response) = try await urlRequester.data(for: request)
         return try makeResponse(data: data, response: response)
     }
     
@@ -89,7 +90,7 @@ final class MUCClientImpl: MUCClient {
         headers: [String: String]?
     ) throws -> URLRequest {
         guard let url = URL(string: url) else {
-            throw URLError(.badURL)
+            throw MUCClientError.invalidUrl
         }
         
         // Create URLRequest

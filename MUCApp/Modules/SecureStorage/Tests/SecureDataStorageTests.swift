@@ -5,11 +5,7 @@ import SecureStorageMocks
 import Testing
 
 struct SecureDataStorageTests {
-    private let sut: SecureDataStorage
-    
-    init() {
-        self.sut = SecureDataStorageImpl(keychain: KeychainMock())
-    }
+    private let sut = SecureDataStorageImpl(keychain: KeychainMock())
     
     @Test("Set throws error if data exceeds maximum size")
     func setDataSizeLimitExceedsMaximum() async throws {

@@ -1,4 +1,5 @@
 import Foundation
+import MUCAPI
 
 final class MUCAuthClient: MUCClient {
     private let client: MUCClient

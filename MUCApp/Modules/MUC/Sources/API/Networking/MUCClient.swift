@@ -1,6 +1,6 @@
 import Foundation
 
-protocol MUCClient {
+public protocol MUCClient: Sendable {
     func request(
         url: String,
         method: HTTPMethod,
@@ -28,7 +28,7 @@ protocol MUCClient {
     ) async throws -> MUCDataResponse<U>
 }
 
-extension MUCClient {
+public extension MUCClient {
     func request(
         url: String,
         method: HTTPMethod,
