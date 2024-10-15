@@ -10,10 +10,15 @@ struct AsyncSecureStorageTests {
         let expirationDate: Date
     }
     
+    enum Constants {
+        static let testKey = "Test"
+        static let testToken = Token(accessToken: "Test", expirationDate: Date.now)
+    }
+    
+    private let keychain = KeychainMock()
     private let sut: AsyncSecureStorage
     
     init() {
-        let keychain = KeychainMock()
         let secureDataStorage = SecureDataStorageImpl(keychain: keychain)
         self.sut = AsyncSecureStorageImpl(
             secureDataStorage: secureDataStorage,
@@ -23,24 +28,22 @@ struct AsyncSecureStorageTests {
         )
     }
     
-    @Test("Get returns expected data")
-    func getWhenDataSet() async throws {
-        let token = Token(accessToken: "Test", expirationDate: Date.now)
-        let testKey = "Test"
-        try await sut.set(key: testKey, value: token)
-        let returnedToken = try await sut.get(key: testKey, type: Token.self)
-        #expect(token == returnedToken)
+    @Test("Get returns expected data given data was set")
+    func getGivenDataWasSetThenReturnsData() async throws {
+        try await sut.set(key: Constants.testKey, value: Constants.testToken)
+        let returnedToken = try await sut.get(key: Constants.testKey, type: Token.self)
+        #expect(Constants.testToken == returnedToken)
     }
     
-    @Test("Get returns nil if no data set")
-    func getWhenNoDataSet() async throws {
-        let testKey = "Test"
-        let returnedToken = try await sut.get(key: testKey, type: Token.self)
+    @Test("Get returns nil if key is not found")
+    func getWhenKeyNotFoundThenReturnsNil() async throws {
+        keychain.status = errSecItemNotFound
+        let returnedToken = try await sut.get(key: Constants.testKey, type: Token.self)
         #expect(returnedToken == nil)
     }
     
-    @Test("Delete removes correct data")
-    func deleteSuccess() async throws {
+    @Test("Delete removes data given data was set")
+    func deleteGivenDataWasSetThenRemovesData() async throws {
         let token = Token(accessToken: "Test", expirationDate: Date.now)
         let testKey = "Test"
         
@@ -56,5 +59,44 @@ struct AsyncSecureStorageTests {
         
         let deletedData = try await sut.get(key: deleteKey, type: Token.self)
         #expect(deletedData == nil)
+    }
+    
+    @Test("Get throws on keychain error")
+    func getWhenKeychainErrorThenThrows() async throws {
+        let status = errSecBadReq
+        keychain.status = status
+        
+        await #expect(
+            throws: SecureDataStorageError.keychainError(status),
+            performing: {
+                let _ = try await sut.get(key: "Test", type: Token.self)
+            }
+        )
+    }
+    
+    @Test("Set throws on keychain error")
+    func setWhenKeychainErrorThenThrows() async throws {
+        let status = errSecBadReq
+        keychain.status = status
+        
+        await #expect(
+            throws: SecureDataStorageError.keychainError(status),
+            performing: {
+                try await sut.set(key: Constants.testKey, value: Constants.testToken)
+            }
+        )
+    }
+    
+    @Test("Delete throws on keychain error")
+    func deleteWhenKeychainErrorThenThrows() async throws {
+        let status = errSecBadReq
+        keychain.status = status
+        
+        await #expect(
+            throws: SecureDataStorageError.keychainError(status),
+            performing: {
+                try await sut.delete(key: Constants.testKey)
+            }
+        )
     }
 }

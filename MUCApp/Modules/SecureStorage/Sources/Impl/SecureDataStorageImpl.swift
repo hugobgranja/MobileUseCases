@@ -34,7 +34,7 @@ public final class SecureDataStorageImpl: SecureDataStorage {
         let status = keychain.add(query)
         
         if status != errSecSuccess {
-            throw SecureDataStorageError.setFailed(status: status)
+            throw SecureDataStorageError.keychainError(status)
         }
     }
     
@@ -53,7 +53,7 @@ public final class SecureDataStorageImpl: SecureDataStorage {
         } else if status == errSecItemNotFound {
             return nil
         } else {
-            throw SecureDataStorageError.getFailed(status: status)
+            throw SecureDataStorageError.keychainError(status)
         }
     }
     
@@ -66,7 +66,7 @@ public final class SecureDataStorageImpl: SecureDataStorage {
         let status = keychain.delete(query)
         
         if status != errSecSuccess {
-            throw SecureDataStorageError.deleteFailed(status: status)
+            throw SecureDataStorageError.keychainError(status)
         }
     }
     

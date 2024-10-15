@@ -5,56 +5,101 @@ import SecureStorageMocks
 import Testing
 
 struct SecureDataStorageTests {
-    private let sut = SecureDataStorageImpl(keychain: KeychainMock())
+    private let keychain = KeychainMock()
+    private let sut: SecureDataStorageImpl
     
-    @Test("Set throws error if data exceeds maximum size")
-    func setDataSizeLimitExceedsMaximum() async throws {
-        let testData = Data.random(size: 4097)
-        let testKey = "Test"
+    enum Constants {
+        static let invalidDataSize = 4097
+        static let validDataSize = 4096
+        static let testKey = "Test"
+        static let testData = Data.random(size: 20)
+    }
+    
+    init() {
+        self.sut = SecureDataStorageImpl(keychain: keychain)
+    }
+    
+    @Test("Set throws error if data size exceeds limit")
+    func setGivenDataThatExceedsSizeLimitThenThrows() async throws {
+        let testData = Data.random(size: Constants.invalidDataSize)
         
         #expect(
             throws: SecureDataStorageError.dataExceedsMaximumSize,
-            performing: { try sut.set(key: testKey, data: testData) }
+            performing: { try sut.set(key: Constants.testKey, data: testData) }
         )
     }
     
-    @Test("Set succeeds if data does not exceed maximum size")
-    func setDataSizeLimitSuccess() async throws {
-        let testData = Data.random(size: 4096)
-        let testKey = "Test"
-        try sut.set(key: testKey, data: testData)
-        #expect(try sut.get(key: testKey) == testData)
+    @Test("Set succeeds if data is within size limits")
+    func setGivenDataWithinLimitsThenSucceeds() async throws {
+        let testData = Data.random(size: Constants.validDataSize)
+        try sut.set(key: Constants.testKey, data: testData)
+        #expect(try sut.get(key: Constants.testKey) == testData)
     }
     
-    @Test("Get returns expected data")
-    func getWhenDataSet() async throws {
-        let testData = Data.random(size: 20)
-        let testKey = "Test"
-        try sut.set(key: testKey, data: testData)
-        let returnedData = try sut.get(key: testKey)
-        #expect(testData == returnedData)
+    @Test("Get returns expected data given data was set")
+    func getGivenDataWasSetThenReturnsData() async throws {
+        try sut.set(key: Constants.testKey, data: Constants.testData)
+        let storedData = try sut.get(key: Constants.testKey)
+        #expect(Constants.testData == storedData)
     }
     
-    @Test("Get returns nil if no data set")
-    func getWhenNoDataSet() async throws {
-        let testKey = "Test"
-        let returnedData = try sut.get(key: testKey)
-        #expect(returnedData == nil)
+    @Test("Get returns nil if key is not found")
+    func getWhenKeyNotFoundThenReturnsNil() async throws {
+        keychain.status = errSecItemNotFound
+        let storedData = try sut.get(key: Constants.testKey)
+        #expect(storedData == nil)
     }
     
-    @Test("Delete removes correct data")
-    func deleteSuccess() async throws {
-        let testData = Data.random(size: 20)
-        let testKey = "Test"
+    @Test("Delete removes data given data was set")
+    func deleteGivenDataWasSetThenRemovesData() async throws {
         let deleteKey = "Delete"
-        try sut.set(key: testKey, data: testData)
-        try sut.set(key: deleteKey, data: testData)
+        try sut.set(key: Constants.testKey, data: Constants.testData)
+        try sut.set(key: deleteKey, data: Constants.testData)
         try sut.delete(key: deleteKey)
         
-        let unchangedData = try sut.get(key: testKey)
+        let unchangedData = try sut.get(key: Constants.testKey)
         #expect(unchangedData != nil)
         
         let deletedData = try sut.get(key: deleteKey)
         #expect(deletedData == nil)
+    }
+    
+    @Test("Get throws on keychain error")
+    func getWhenKeychainErrorThenThrows() async throws {
+        let status = errSecBadReq
+        keychain.status = status
+        
+        #expect(
+            throws: SecureDataStorageError.keychainError(status),
+            performing: {
+                let _ = try sut.get(key: Constants.testKey)
+            }
+        )
+    }
+    
+    @Test("Set throws on keychain error")
+    func setWhenKeychainErrorThenThrows() async throws {
+        let status = errSecBadReq
+        keychain.status = status
+        
+        #expect(
+            throws: SecureDataStorageError.keychainError(status),
+            performing: {
+                try sut.set(key: Constants.testKey, data: Constants.testData)
+            }
+        )
+    }
+    
+    @Test("Delete throws on keychain error")
+    func deleteWhenKeychainErrorThenThrows() async throws {
+        let status = errSecBadReq
+        keychain.status = status
+        
+        #expect(
+            throws: SecureDataStorageError.keychainError(status),
+            performing: {
+                try sut.delete(key: Constants.testKey)
+            }
+        )
     }
 }
