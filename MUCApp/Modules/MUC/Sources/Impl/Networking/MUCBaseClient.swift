@@ -1,12 +1,12 @@
 import Foundation
 import MUCAPI
 
-final class MUCBaseClient: MUCClient {
+public final class MUCBaseClient: MUCClient {
     private let urlRequester: URLRequester
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
     
-    init(
+    public init(
         urlRequester: URLRequester,
         encoder: JSONEncoder,
         decoder: JSONDecoder
@@ -17,7 +17,7 @@ final class MUCBaseClient: MUCClient {
     }
     
     // Request that sends no data and retrieves no data
-    func request(
+    public func request(
         url: String,
         method: HTTPMethod,
         headers: [String: String]? = nil
@@ -33,7 +33,7 @@ final class MUCBaseClient: MUCClient {
     }
     
     // Request that sends no data and retrieves data
-    func request<U: Decodable>(
+    public func request<U: Decodable>(
         url: String,
         method: HTTPMethod,
         headers: [String: String]? = nil
@@ -49,7 +49,7 @@ final class MUCBaseClient: MUCClient {
     }
     
     // Requests that sends data and retrieves no data
-    func request<T: Encodable>(
+    public func request<T: Encodable>(
         url: String,
         method: HTTPMethod,
         body: T,
@@ -67,7 +67,7 @@ final class MUCBaseClient: MUCClient {
     }
     
     // Request that sends data and retrieves data
-    func request<T: Encodable, U: Decodable>(
+    public func request<T: Encodable, U: Decodable>(
         url: String,
         method: HTTPMethod,
         body: T,

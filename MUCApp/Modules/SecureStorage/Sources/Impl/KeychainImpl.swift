@@ -3,6 +3,8 @@ import SecureStorageAPI
 import Security
 
 public final class KeychainImpl: Keychain {
+    public init() {}
+    
     public func add(_ query: [String: Any]) -> OSStatus {
         return SecItemAdd(query as CFDictionary, nil)
     }

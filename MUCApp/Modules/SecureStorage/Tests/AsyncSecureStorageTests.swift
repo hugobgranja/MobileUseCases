@@ -23,8 +23,7 @@ struct AsyncSecureStorageTests {
         self.sut = AsyncSecureStorageImpl(
             secureDataStorage: secureDataStorage,
             encoder: JSONEncoder(),
-            decoder: JSONDecoder(),
-            queue: DispatchQueue.main
+            decoder: JSONDecoder()
         )
     }
     

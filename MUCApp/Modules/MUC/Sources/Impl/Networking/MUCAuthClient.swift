@@ -1,7 +1,7 @@
 import Foundation
 import MUCAPI
 
-final class MUCAuthClient: MUCClient {
+public final class MUCAuthClient: MUCClient {
     private let client: MUCClient
     private let authRepository: AuthRepository
     
@@ -13,7 +13,7 @@ final class MUCAuthClient: MUCClient {
         self.authRepository = authRepository
     }
     
-    func request(
+    public func request(
         url: String,
         method: HTTPMethod,
         headers: [String: String]?
@@ -22,7 +22,7 @@ final class MUCAuthClient: MUCClient {
         return try await client.request(url: url, method: method, headers: authenticatedHeaders)
     }
     
-    func request<U: Decodable>(
+    public func request<U: Decodable>(
         url: String,
         method: HTTPMethod,
         headers: [String: String]?
@@ -31,7 +31,7 @@ final class MUCAuthClient: MUCClient {
         return try await client.request(url: url, method: method, headers: authenticatedHeaders)
     }
     
-    func request<T: Encodable>(
+    public func request<T: Encodable>(
         url: String,
         method: HTTPMethod,
         body: T,
@@ -41,7 +41,7 @@ final class MUCAuthClient: MUCClient {
         return try await client.request(url: url, method: method, body: body, headers: authenticatedHeaders)
     }
     
-    func request<T: Encodable, U: Decodable>(
+    public func request<T: Encodable, U: Decodable>(
         url: String,
         method: HTTPMethod,
         body: T,

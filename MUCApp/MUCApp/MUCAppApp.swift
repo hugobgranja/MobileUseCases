@@ -7,6 +7,9 @@
 
 import SwiftUI
 import SwiftData
+import MUCAPI
+import MUCImpl
+import SecureStorageImpl
 
 @main
 struct MUCAppApp: App {
@@ -23,11 +26,40 @@ struct MUCAppApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    private let loginViewModel: LoginViewModel
+    
+    init() {
+        let baseClient = MUCBaseClient(
+            urlRequester: URLSession.shared,
+            encoder: JSONEncoder(),
+            decoder: JSONDecoder()
+        )
+        
+        let keychain = KeychainImpl()
+        
+        let secureStorage = AsyncSecureStorageImpl(
+            secureDataStorage: SecureDataStorageImpl(keychain: keychain),
+            encoder: JSONEncoder(),
+            decoder: JSONDecoder(),
+            queue: DispatchQueue.global()
+        )
+        
+        let authRepository = AuthRepositoryImpl(
+            endpoints: DevEndpoints(),
+            client: baseClient,
+            storage: secureStorage
+        )
+        
+        self.loginViewModel = LoginViewModel(authRepository: authRepository)
+    }
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView(viewModel: loginViewModel)
         }
         .modelContainer(sharedModelContainer)
     }
 }
+
+extension URLSession: @retroactive URLRequester {}

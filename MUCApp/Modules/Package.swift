@@ -53,7 +53,11 @@ package.targets.append(contentsOf: [
     ),
     .target(
         name: "MUCImpl",
-        dependencies: ["MUCAPI", "SecureStorageAPI"],
+        dependencies: [
+            "MUCAPI",
+            "MUCMocks",
+            "SecureStorageAPI"
+        ],
         path: "MUC/Sources/Impl"
     ),
     .target(
@@ -66,7 +70,8 @@ package.targets.append(contentsOf: [
         dependencies: [
             "MUCAPI",
             "MUCImpl",
-            "MUCMocks"
+            "MUCMocks",
+            "SecureStorageMocks"
         ],
         path: "MUC/Tests"
     )
