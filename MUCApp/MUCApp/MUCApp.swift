@@ -23,9 +23,7 @@ struct MUCApp: App {
 
     var body: some Scene {
         WindowGroup {
-            NavigationStack(path: appCoordinator.$navPath.path) {
-                appCoordinator.getInitialView()
-            }
+            appCoordinator.getInitialView()
         }
         .modelContainer(sharedModelContainer)
     }

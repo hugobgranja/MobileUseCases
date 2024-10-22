@@ -44,14 +44,16 @@ final class AppCoordinator {
         
         let loginViewModel = LoginViewModel(authRepository: authRepository)
         
-        return LoginView(
-            viewModel: loginViewModel,
-            navDelegate: self
-        )
-        .navigationDestination(
-            for: Destination.self,
-            destination: destinationView(for:)
-        )
+        return NavigationStack(path: $navPath.path) {
+            LoginView(
+                viewModel: loginViewModel,
+                navDelegate: self
+            )
+            .navigationDestination(
+                for: Destination.self,
+                destination: destinationView(for:)
+            )
+        }
     }
     
     private func destinationView(for destination: Destination) -> some View {
