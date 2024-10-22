@@ -19,7 +19,7 @@ struct MUCApp: App {
         }
     }()
 
-    private var appCoordinator = AppCoordinator()
+    private let appCoordinator = AppCoordinator()
 
     var body: some Scene {
         WindowGroup {
