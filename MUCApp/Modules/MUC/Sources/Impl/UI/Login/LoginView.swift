@@ -1,41 +1,72 @@
+import MUCAPI
 import MUCMocks
 import SwiftUI
 
 public struct LoginView: View {
     @Bindable var viewModel: LoginViewModel
+    private var navDelegate: any LoginNavDelegate
     
-    public init(viewModel: LoginViewModel) {
+    public init(
+        viewModel: LoginViewModel,
+        navDelegate: any LoginNavDelegate
+    ) {
         self.viewModel = viewModel
+        self.navDelegate = navDelegate
     }
 
     public var body: some View {
-        Form {
-            Section(header: Text("Login")) {
+        ZStack {
+            MUCGradientView()
+            
+            VStack {
+                Image(systemName: "music.note.list")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 150, height: 150)
+                    .foregroundStyle(.black, .blue)
+                    .symbolEffect(.bounce, options: .nonRepeating)
+                
+                Text("Login")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                    .padding(.top, 40)
+                    .padding(.bottom, 4)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text("Sign in to continue.")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+             
                 TextField("Email", text: $viewModel.email)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled(true)
-                    .keyboardType(.emailAddress)
+                    .modifier(EmailFieldViewModifier())
+                    .modifier(FormFieldViewModifier())
                 
-                SecureField("Password", text: $viewModel.password)
-                
-                if let errorMessage = viewModel.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                }
+                PasswordFieldView("Password", password: $viewModel.password)
+                    .modifier(FormFieldViewModifier())
                 
                 Button(action: {
                     Task {
                         await viewModel.login()
                     }
                 }) {
-                    if viewModel.isLoading {
-                        ProgressView()
-                    } else {
-                        Text("Login")
-                    }
+                    PrimaryButtonView("Login")
                 }
-                .disabled(!viewModel.isFormValid || viewModel.isLoading)
+                .padding(.top, 10)
             }
+            .padding(.horizontal, 40)
+        }
+        .onChange(of: viewModel.event, initial: false) { _, new in handleEvent(new) }
+    }
+    
+    private func handleEvent(_ event: LoginViewModel.Event?) {
+        guard let event else { return }
+        
+        switch event {
+        case .loginSuccessful:
+            navDelegate.onLoginSuccessful()
         }
     }
 }
@@ -43,5 +74,5 @@ public struct LoginView: View {
 #Preview {
     let authRepository = AuthRepositoryMock()
     let viewModel = LoginViewModel(authRepository: authRepository)
-    LoginView(viewModel: viewModel)
+    LoginView(viewModel: viewModel, navDelegate: LoginNavDelegateMock())
 }

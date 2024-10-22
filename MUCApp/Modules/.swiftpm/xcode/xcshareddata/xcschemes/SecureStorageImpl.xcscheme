@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "StorageImpl"
-               BuildableName = "StorageImpl"
-               BlueprintName = "StorageImpl"
+               BlueprintIdentifier = "SecureStorageImpl"
+               BuildableName = "SecureStorageImpl"
+               BlueprintName = "SecureStorageImpl"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -27,8 +27,16 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      shouldAutocreateTestPlan = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <TestPlans>
+         <TestPlanReference
+            reference = "container:SecureStorage/SecureStorageTestPlan.xctestplan"
+            default = "YES">
+         </TestPlanReference>
+         <TestPlanReference
+            reference = "container:MUC/MUCTestPlan.xctestplan">
+         </TestPlanReference>
+      </TestPlans>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -50,9 +58,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "StorageImpl"
-            BuildableName = "StorageImpl"
-            BlueprintName = "StorageImpl"
+            BlueprintIdentifier = "SecureStorageImpl"
+            BuildableName = "SecureStorageImpl"
+            BlueprintName = "SecureStorageImpl"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

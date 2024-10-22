@@ -10,17 +10,17 @@ final class Token: Model, @unchecked Sendable {
     @Parent(key: "user_id")
     var user: User
     
-    @Field(key: "accessToken")
+    @Field(key: "access_token")
     var accessToken: String
 
-    @Field(key: "access_expires_at")
-    var accessExpiresAt: Date
+    @Field(key: "access_token_expiration")
+    var accessTokenExpiration: Date
     
-    @Field(key: "refreshToken")
+    @Field(key: "refresh_token")
     var refreshToken: String
     
-    @Field(key: "refresh_expires_at")
-    var refreshExpiresAt: Date
+    @Field(key: "refresh_token_expiration")
+    var refreshTokenExpiration: Date
 
     init() { }
 
@@ -35,17 +35,17 @@ final class Token: Model, @unchecked Sendable {
         self.id = id
         self.$user.id = userID
         self.accessToken = accessToken
-        self.accessExpiresAt = accessExpiresAt
+        self.accessTokenExpiration = accessExpiresAt
         self.refreshToken = refreshToken
-        self.refreshExpiresAt = refreshExpiresAt
+        self.refreshTokenExpiration = refreshExpiresAt
     }
     
     func toDTO() -> TokenDTO {
         TokenDTO(
             accessToken: accessToken,
-            accessTokenExpiration: accessExpiresAt,
+            accessTokenExpiration: accessTokenExpiration,
             refreshToken: refreshToken,
-            refreshTokenExpiration: refreshExpiresAt
+            refreshTokenExpiration: refreshTokenExpiration
         )
     }
 }

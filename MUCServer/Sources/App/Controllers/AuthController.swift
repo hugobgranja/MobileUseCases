@@ -62,13 +62,13 @@ struct AuthController: RouteCollection {
             throw Abort(.unauthorized)
         }
         
-        if token.refreshExpiresAt < Date.now {
+        if token.refreshTokenExpiration < Date.now {
             throw Abort(.unauthorized, reason: "Refresh token expired")
         }
         
         let newAccessToken = generateAccessToken()
         token.accessToken = newAccessToken
-        token.accessExpiresAt = Date.now.addingTimeInterval(Constants.accessTokenDuration)
+        token.accessTokenExpiration = Date.now.addingTimeInterval(Constants.accessTokenDuration)
         
         try await token.save(on: req.db)
         

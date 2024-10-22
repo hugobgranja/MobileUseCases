@@ -48,7 +48,11 @@ public actor AuthRepositoryImpl: AuthRepository {
         else {
             throw AuthRepositoryError.loginRequired
         }
-        
+
+        if self.token == nil {
+            self.token = token
+        }
+
         if isAccessTokenValid() {
             return token.accessToken
         }

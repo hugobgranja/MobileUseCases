@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B94AEC7F2CC6C960003C2848 /* SecureStorageAPI in Frameworks */ = {isa = PBXBuildFile; productRef = B94AEC7E2CC6C960003C2848 /* SecureStorageAPI */; };
 		B9C92DB52CB04CB100E9DBB4 /* MUCAPI in Frameworks */ = {isa = PBXBuildFile; productRef = B9C92DB42CB04CB100E9DBB4 /* MUCAPI */; };
 		B9CFC9F42CC1720100A28673 /* MUCImpl in Frameworks */ = {isa = PBXBuildFile; productRef = B9CFC9F32CC1720100A28673 /* MUCImpl */; };
 		B9CFC9F62CC1741900A28673 /* SecureStorageImpl in Frameworks */ = {isa = PBXBuildFile; productRef = B9CFC9F52CC1741900A28673 /* SecureStorageImpl */; };
@@ -61,6 +62,7 @@
 			files = (
 				B9CFC9F42CC1720100A28673 /* MUCImpl in Frameworks */,
 				B9C92DB52CB04CB100E9DBB4 /* MUCAPI in Frameworks */,
+				B94AEC7F2CC6C960003C2848 /* SecureStorageAPI in Frameworks */,
 				B9CFC9F62CC1741900A28673 /* SecureStorageImpl in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,6 +136,7 @@
 				B9C92DB42CB04CB100E9DBB4 /* MUCAPI */,
 				B9CFC9F32CC1720100A28673 /* MUCImpl */,
 				B9CFC9F52CC1741900A28673 /* SecureStorageImpl */,
+				B94AEC7E2CC6C960003C2848 /* SecureStorageAPI */,
 			);
 			productName = MUCApp;
 			productReference = B94D38852CAAE7C6007970AB /* MUCApp.app */;
@@ -582,6 +585,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B94AEC7E2CC6C960003C2848 /* SecureStorageAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SecureStorageAPI;
+		};
 		B9C92DB42CB04CB100E9DBB4 /* MUCAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MUCAPI;

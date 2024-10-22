@@ -138,7 +138,7 @@ public final class MUCBaseClient: MUCClient {
             headers: response?.allHeaderFields
         )
     }
-    
+
     private func makeResponse(response: URLResponse) -> MUCResponse {
         let response = response as? HTTPURLResponse
         

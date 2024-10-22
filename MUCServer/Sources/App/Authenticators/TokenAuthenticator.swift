@@ -11,7 +11,7 @@ struct TokenAuthenticator: AsyncBearerAuthenticator {
             return
         }
 
-        if token.accessExpiresAt > Date.now {
+        if token.accessTokenExpiration > Date.now {
             request.auth.login(token.user)
         }
     }

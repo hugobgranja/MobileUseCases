@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "F30C9EC4-2CF1-4CEA-9D7C-24472642222D",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Modules",
+        "identifier" : "SecureStorageTests",
+        "name" : "SecureStorageTests"
+      }
+    }
+  ],
+  "version" : 1
+}
