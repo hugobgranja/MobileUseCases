@@ -13,7 +13,7 @@ final class AppCoordinator {
     @Bindable var navPath = ObservableNavigationPath()
     private var childCoordinator: Any?
 
-    public init() {}
+    init() {}
 
     func getInitialView() -> some View {
         let encoder = JSONEncoder()
