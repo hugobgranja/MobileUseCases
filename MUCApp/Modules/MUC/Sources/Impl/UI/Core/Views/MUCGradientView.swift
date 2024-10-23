@@ -1,9 +1,9 @@
 import SwiftUI
 
-struct MUCGradientView: View {
+public struct MUCGradientView: View {
     @Environment(\.colorScheme) var colorScheme
     
-    var body: some View {
+    public var body: some View {
         if colorScheme == .dark {
             MeshGradient(
                 width: 2, height: 2, points: [

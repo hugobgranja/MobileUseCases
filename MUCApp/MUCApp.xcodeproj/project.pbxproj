@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B94AEC7F2CC6C960003C2848 /* SecureStorageAPI in Frameworks */ = {isa = PBXBuildFile; productRef = B94AEC7E2CC6C960003C2848 /* SecureStorageAPI */; };
+		B94AEC8C2CC94B8D003C2848 /* DependencyInjection in Frameworks */ = {isa = PBXBuildFile; productRef = B94AEC8B2CC94B8D003C2848 /* DependencyInjection */; };
 		B9C92DB52CB04CB100E9DBB4 /* MUCAPI in Frameworks */ = {isa = PBXBuildFile; productRef = B9C92DB42CB04CB100E9DBB4 /* MUCAPI */; };
 		B9CFC9F42CC1720100A28673 /* MUCImpl in Frameworks */ = {isa = PBXBuildFile; productRef = B9CFC9F32CC1720100A28673 /* MUCImpl */; };
 		B9CFC9F62CC1741900A28673 /* SecureStorageImpl in Frameworks */ = {isa = PBXBuildFile; productRef = B9CFC9F52CC1741900A28673 /* SecureStorageImpl */; };
@@ -61,6 +62,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9CFC9F42CC1720100A28673 /* MUCImpl in Frameworks */,
+				B94AEC8C2CC94B8D003C2848 /* DependencyInjection in Frameworks */,
 				B9C92DB52CB04CB100E9DBB4 /* MUCAPI in Frameworks */,
 				B94AEC7F2CC6C960003C2848 /* SecureStorageAPI in Frameworks */,
 				B9CFC9F62CC1741900A28673 /* SecureStorageImpl in Frameworks */,
@@ -137,6 +139,7 @@
 				B9CFC9F32CC1720100A28673 /* MUCImpl */,
 				B9CFC9F52CC1741900A28673 /* SecureStorageImpl */,
 				B94AEC7E2CC6C960003C2848 /* SecureStorageAPI */,
+				B94AEC8B2CC94B8D003C2848 /* DependencyInjection */,
 			);
 			productName = MUCApp;
 			productReference = B94D38852CAAE7C6007970AB /* MUCApp.app */;
@@ -440,7 +443,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -470,7 +473,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -487,7 +490,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uc.examples.MUCAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MUCApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MUCApp";
 			};
@@ -505,7 +508,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uc.examples.MUCAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MUCApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MUCApp";
 			};
@@ -521,7 +524,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uc.examples.MUCAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = MUCApp;
 			};
@@ -537,7 +540,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uc.examples.MUCAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = MUCApp;
 			};
@@ -588,6 +591,10 @@
 		B94AEC7E2CC6C960003C2848 /* SecureStorageAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SecureStorageAPI;
+		};
+		B94AEC8B2CC94B8D003C2848 /* DependencyInjection */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DependencyInjection;
 		};
 		B9C92DB42CB04CB100E9DBB4 /* MUCAPI */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -19,7 +19,14 @@ struct MUCApp: App {
         }
     }()
 
-    private let appCoordinator = AppCoordinator()
+    private let container: AppContainer
+    private let appCoordinator: AppCoordinator
+
+    init() {
+        self.container = AppContainer()
+        container.assemble()
+        appCoordinator = container.resolve(AppCoordinator.self)
+    }
 
     var body: some Scene {
         WindowGroup {

@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  MUCApp
-//
-//  Created by hg on 30/09/2024.
-//
-
 import SwiftUI
 import SwiftData
 

@@ -19,13 +19,9 @@ public struct LoginView: View {
             MUCGradientView()
             
             VStack {
-                Image(systemName: "music.note.list")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 150, height: 150)
-                    .foregroundStyle(.black, .blue)
+                AppLogoView(width: 150, height: 150)
                     .symbolEffect(.bounce, options: .nonRepeating)
-                
+
                 Text("Login")
                     .font(.largeTitle)
                     .fontWeight(.bold)

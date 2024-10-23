@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PasswordFieldView: View {
+public struct PasswordFieldView: View {
     private let placeholder: String
     @Binding private var password: String
     @State private var isSecure: Bool = true
@@ -10,12 +10,12 @@ struct PasswordFieldView: View {
         isSecure ? "eye.slash.fill" : "eye.fill"
     }
     
-    init(_ placeholder: String, password: Binding<String>) {
+    public init(_ placeholder: String, password: Binding<String>) {
         self.placeholder = placeholder
         self._password = password
     }
     
-    var body: some View {
+    public var body: some View {
         HStack {
             if isSecure {
                 SecureField(placeholder, text: $password)

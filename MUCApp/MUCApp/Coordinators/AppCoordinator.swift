@@ -12,47 +12,23 @@ final class AppCoordinator {
     
     @Bindable var navPath = ObservableNavigationPath()
     private var childCoordinator: Any?
+    private let loginViewFactory: (LoginNavDelegate) -> LoginView
 
-    init() {}
+    init(
+        loginViewFactory: @escaping (LoginNavDelegate) -> LoginView
+    ) {
+        self.loginViewFactory = loginViewFactory
+    }
 
     func getInitialView() -> some View {
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
+        let loginView = loginViewFactory(self)
 
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-
-        let baseClient = MUCBaseClient(
-            urlRequester: URLSession.shared,
-            encoder: encoder,
-            decoder: decoder
-        )
-        
-        let keychain = KeychainImpl()
-        
-        let secureStorage = AsyncSecureStorageImpl(
-            secureDataStorage: SecureDataStorageImpl(keychain: keychain),
-            encoder: encoder,
-            decoder: decoder
-        )
-        
-        let authRepository = AuthRepositoryImpl(
-            endpoints: DevEndpoints(),
-            client: baseClient,
-            storage: secureStorage
-        )
-        
-        let loginViewModel = LoginViewModel(authRepository: authRepository)
-        
         return NavigationStack(path: $navPath.path) {
-            LoginView(
-                viewModel: loginViewModel,
-                navDelegate: self
-            )
-            .navigationDestination(
-                for: Destination.self,
-                destination: destinationView(for:)
-            )
+            loginView
+                .navigationDestination(
+                    for: Destination.self,
+                    destination: destinationView(for:)
+                )
         }
     }
     

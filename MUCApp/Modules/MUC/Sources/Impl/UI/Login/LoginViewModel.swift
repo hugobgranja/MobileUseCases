@@ -35,11 +35,17 @@ public final class LoginViewModel: Sendable {
         do {
             try await authRepository.login(email: email, password: password)
             event = .loginSuccessful
+            clearFields()
         }
         catch {
-            errorMessage = "Login failed"
+            errorMessage = "There was a problem processing your login.\nPlease try again."
         }
         
         isLoading = false
+    }
+
+    private func clearFields() {
+        email = ""
+        password = ""
     }
 }
