@@ -5,12 +5,7 @@ import Foundation
 public final class Container {
     private var services: [String: Any] = [:]
     private var singletonServices: [String: Any] = [:]
-    private let weakServices: NSMapTable<NSString, AnyObject> = {
-        NSMapTable(
-            keyOptions: .copyIn,
-            valueOptions: .weakMemory
-        )
-    }()
+    private let weakServices: NSMapTable<NSString, AnyObject> = .strongToWeakObjects()
 
     public init() {}
 
@@ -36,17 +31,19 @@ public final class Container {
     /// - Parameters:
     ///   - type: The type of the service to resolve.
     ///   - arguments: Additional arguments required to create the service.
+    /// - Throws:
+    ///   - `DIError.serviceNotFound` if no service is registered for the specified type.
     /// - Returns: An instance of the requested service type.
-    public func resolve<T, each A>(
+    public func resolveThrowing<T, each A>(
         _ type: T.Type,
         arguments: repeat each A
-    ) -> T {
+    ) throws -> T {
         let key = makeKey(from: type)
 
         guard
             let service = services[key] as? Service<T, repeat each A>
         else {
-            fatalError("[DI] Dependency for type \(type) not found!")
+            throw DIError.serviceNotFound
         }
 
         switch service.lifetime {
@@ -74,6 +71,29 @@ public final class Container {
                 weakServices.setObject(instance, forKey: key)
                 return instance as! T
             }
+        }
+    }
+
+    /// Resolves a registered service, creating a new instance or returning an existing one based on its lifetime.
+    ///
+    /// This function wraps the `resolveThrowing` method and converts the
+    /// throwing behavior into a non-throwing interface. If a service for
+    /// the specified type is not found, it will terminate the program with
+    /// a fatal error.
+    ///
+    /// - Parameters:
+    ///   - type: The type of the service to resolve.
+    ///   - arguments: Additional arguments required to create the service.
+    /// - Returns: An instance of the requested service type.
+    public func resolve<T, each A>(
+        _ type: T.Type,
+        arguments: repeat each A
+    ) -> T {
+        do {
+            return try resolveThrowing(type, arguments: repeat each arguments)
+        }
+        catch {
+            fatalError("[DI] Service for type \(type) not found!")
         }
     }
 

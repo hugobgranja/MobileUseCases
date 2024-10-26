@@ -12,6 +12,13 @@ package.targets.append(contentsOf: [
     .target(
         name: "DependencyInjection",
         path: "DependencyInjection/Sources"
+    ),
+    .testTarget(
+        name: "DependencyInjectionTests",
+        dependencies: [
+            "DependencyInjection"
+        ],
+        path: "DependencyInjection/Tests"
     )
 ])
 
