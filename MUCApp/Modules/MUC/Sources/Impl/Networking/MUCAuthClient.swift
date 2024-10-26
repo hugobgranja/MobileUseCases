@@ -50,7 +50,7 @@ public final class MUCAuthClient: MUCClient {
         let authenticatedHeaders = try await attachBearerToken(to: headers)
         return try await client.request(url: url, method: method, body: body, headers: authenticatedHeaders)
     }
-    
+
     private func attachBearerToken(to headers: [String: String]?) async throws -> [String: String] {
         let token = try await authRepository.getAccessToken()
         var headers = headers ?? [:]

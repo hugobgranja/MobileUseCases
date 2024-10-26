@@ -29,6 +29,7 @@ public final class MUCBaseClient: MUCClient {
         )
         
         let (_, response) = try await urlRequester.data(for: request)
+        try validateResponse(response: response)
         return makeResponse(response: response)
     }
     
@@ -43,8 +44,9 @@ public final class MUCBaseClient: MUCClient {
             method: method,
             headers: headers
         )
-        
+
         let (data, response) = try await urlRequester.data(for: request)
+        try validateResponse(response: response)
         return try makeResponse(data: data, response: response)
     }
     
@@ -63,6 +65,7 @@ public final class MUCBaseClient: MUCClient {
         )
         
         let (_, response) = try await urlRequester.data(for: request)
+        try validateResponse(response: response)
         return makeResponse(response: response)
     }
     
@@ -81,6 +84,7 @@ public final class MUCBaseClient: MUCClient {
         )
         
         let (data, response) = try await urlRequester.data(for: request)
+        try validateResponse(response: response)
         return try makeResponse(data: data, response: response)
     }
     
@@ -125,7 +129,27 @@ public final class MUCBaseClient: MUCClient {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try encoder.encode(body)
     }
-    
+
+    private func validateResponse(response: URLResponse) throws {
+        guard let response = response as? HTTPURLResponse else {
+            throw MUCClientError.invalidResponse
+        }
+
+        let statusCode = response.statusCode
+
+        if !((200...299) ~= statusCode) {
+            throw makeError(from: statusCode)
+        }
+    }
+
+    private func makeError(from statusCode: Int) -> MUCClientError {
+        if statusCode == 401 {
+            return MUCClientError.unauthorized
+        } else {
+            return MUCClientError.serverError(statusCode: statusCode)
+        }
+    }
+
     private func makeResponse<U: Decodable>(
         data: Data,
         response: URLResponse
