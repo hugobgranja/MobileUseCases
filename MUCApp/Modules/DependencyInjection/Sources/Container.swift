@@ -1,8 +1,7 @@
-// Note: Sending a protocol that only exposes the
-// resolve method as a factory argument crashes the compiler
-
 import Foundation
 
+/// A dependency injection container for managing service registrations and resolutions.
+/// - Note: Sending a protocol that only exposes the resolve method as a factory argument crashes the compiler
 public final class Container {
     private var services: [String: Any] = [:]
     private var singletonServices: [String: Any] = [:]
@@ -15,6 +14,13 @@ public final class Container {
 
     public init() {}
 
+    /// Registers a service with a specified lifetime and factory method.
+    ///
+    /// - Parameters:
+    ///   - type: The type of the service being registered.
+    ///   - lifetime: The lifetime of the service (default is `.transient`).
+    ///   - factory: A closure that creates an instance of the service.
+    /// - Note: If a service with the same type is already registered, it will be overwritten.
     public func register<T, each A>(
         _ type: T.Type,
         lifetime: Lifetime = .transient,
@@ -25,6 +31,12 @@ public final class Container {
         services[key] = service
     }
 
+    /// Resolves a registered service, creating a new instance or returning an existing one based on its lifetime.
+    ///
+    /// - Parameters:
+    ///   - type: The type of the service to resolve.
+    ///   - arguments: Additional arguments required to create the service.
+    /// - Returns: An instance of the requested service type.
     public func resolve<T, each A>(
         _ type: T.Type,
         arguments: repeat each A
@@ -65,6 +77,13 @@ public final class Container {
         }
     }
 
+    /// Automatically registers a service using an initializer that requires additional arguments.
+    ///
+    /// - Parameters:
+    ///   - type: The type of the service being registered.
+    ///   - lifetime: The lifetime of the service (default is `.transient`).
+    ///   - initializer: A closure that initializes the service using resolved dependencies.
+    /// - Note: This method uses the `resolve` method to obtain dependencies.
     public func autoRegister<T, each D>(
         _ type: T.Type,
         lifetime: Lifetime = .transient,
@@ -75,6 +94,10 @@ public final class Container {
         }
     }
 
+    /// Creates a unique key string for the specified type.
+    ///
+    /// - Parameter type: The type for which to create a key.
+    /// - Returns: A unique string representing the type.
     private func makeKey<T>(from type: T.Type) -> String {
         return String(describing: type)
     }
