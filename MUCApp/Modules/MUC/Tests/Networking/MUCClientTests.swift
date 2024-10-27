@@ -106,7 +106,189 @@ struct MUCClientTests {
             }
         )
     }
-    
+
+    // MARK: Test throw on server error
+    @Test(
+        "Request sending no data and retrieving throws serve error",
+        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
+    )
+    func requestSendNoDataRetrieveNoDataThrowsOnServerError(
+        urlRequester: URLRequesterMock,
+        sut: MUCClient
+    ) async throws {
+        urlRequester.setResponseStatusCode(500)
+
+        await #expect(
+            throws: MUCClientError.serverError(statusCode: 500),
+            performing: {
+                let _ = try await sut.request(
+                    url: Constants.url,
+                    method: .get,
+                    headers: [:]
+                )
+            }
+        )
+    }
+
+    @Test(
+        "Request sending no data and retrieving data throws on server error",
+        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
+    )
+    func requestSendNoDataRetrieveDataThrowsOnServerError(
+        urlRequester: URLRequesterMock,
+        sut: MUCClient
+    ) async throws {
+        urlRequester.setResponseStatusCode(500)
+
+        await #expect(
+            throws: MUCClientError.serverError(statusCode: 500),
+            performing: {
+                let _: MUCDataResponse<Token> = try await sut.request(
+                    url: Constants.url,
+                    method: .get,
+                    headers: [:]
+                )
+            }
+        )
+    }
+
+    @Test(
+        "Requests sending data and retrieving no data sends throws on server error",
+        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
+    )
+    func requestSendDataRetrieveNoDataThrowsOnServerError(
+        urlRequester: URLRequesterMock,
+        sut: MUCClient
+    ) async throws {
+        urlRequester.setResponseStatusCode(500)
+
+        await #expect(
+            throws: MUCClientError.serverError(statusCode: 500),
+            performing: {
+                let _ = try await sut.request(
+                    url: Constants.url,
+                    method: .get,
+                    body: Constants.token,
+                    headers: [:]
+                )
+            }
+        )
+    }
+
+    @Test(
+        "Request sending data and retrieving data sends throws on server error",
+        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
+    )
+    func requestSendDataRetrieveDataThrowsOnServerError(
+        urlRequester: URLRequesterMock,
+        sut: MUCClient
+    ) async throws {
+        urlRequester.setResponseStatusCode(500)
+
+        await #expect(
+            throws: MUCClientError.serverError(statusCode: 500),
+            performing: {
+                let _: MUCDataResponse<Token> = try await sut.request(
+                    url: Constants.url,
+                    method: .get,
+                    body: Constants.token,
+                    headers: [:]
+                )
+            }
+        )
+    }
+
+    // MARK: Test throw on server unauthorized response
+    @Test(
+        "Request sending no data and retrieving throws unauthorized",
+        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
+    )
+    func requestSendNoDataRetrieveNoDataThrowsOnUnauthorized(
+        urlRequester: URLRequesterMock,
+        sut: MUCClient
+    ) async throws {
+        urlRequester.setResponseStatusCode(401)
+
+        await #expect(
+            throws: MUCClientError.unauthorized,
+            performing: {
+                let _ = try await sut.request(
+                    url: Constants.url,
+                    method: .get,
+                    headers: [:]
+                )
+            }
+        )
+    }
+
+    @Test(
+        "Request sending no data and retrieving data throws on server error",
+        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
+    )
+    func requestSendNoDataRetrieveDataThrowsOnUnauthorized(
+        urlRequester: URLRequesterMock,
+        sut: MUCClient
+    ) async throws {
+        urlRequester.setResponseStatusCode(401)
+
+        await #expect(
+            throws: MUCClientError.unauthorized,
+            performing: {
+                let _: MUCDataResponse<Token> = try await sut.request(
+                    url: Constants.url,
+                    method: .get,
+                    headers: [:]
+                )
+            }
+        )
+    }
+
+    @Test(
+        "Requests sending data and retrieving no data sends throws on server error",
+        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
+    )
+    func requestSendDataRetrieveNoDataThrowsOnUnauthorized(
+        urlRequester: URLRequesterMock,
+        sut: MUCClient
+    ) async throws {
+        urlRequester.setResponseStatusCode(401)
+
+        await #expect(
+            throws: MUCClientError.unauthorized,
+            performing: {
+                let _ = try await sut.request(
+                    url: Constants.url,
+                    method: .get,
+                    body: Constants.token,
+                    headers: [:]
+                )
+            }
+        )
+    }
+
+    @Test(
+        "Request sending data and retrieving data sends throws on server error",
+        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
+    )
+    func requestSendDataRetrieveDataThrowsOnUnauthorized(
+        urlRequester: URLRequesterMock,
+        sut: MUCClient
+    ) async throws {
+        urlRequester.setResponseStatusCode(401)
+
+        await #expect(
+            throws: MUCClientError.unauthorized,
+            performing: {
+                let _: MUCDataResponse<Token> = try await sut.request(
+                    url: Constants.url,
+                    method: .get,
+                    body: Constants.token,
+                    headers: [:]
+                )
+            }
+        )
+    }
+
     
     // MARK: Test data sent and returned
     @Test(

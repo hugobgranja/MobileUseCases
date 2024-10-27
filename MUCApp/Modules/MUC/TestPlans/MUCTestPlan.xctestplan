@@ -14,7 +14,7 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:Modules",
+        "containerPath" : "container:",
         "identifier" : "MUCTests",
         "name" : "MUCTests"
       }
