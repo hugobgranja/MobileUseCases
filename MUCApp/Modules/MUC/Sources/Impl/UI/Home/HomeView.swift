@@ -16,6 +16,7 @@ public struct HomeView: View {
             navDelegate.onDetail()
         }) {
             PrimaryButtonView("Go to detail")
+                .padding()
         }
     }
 }
