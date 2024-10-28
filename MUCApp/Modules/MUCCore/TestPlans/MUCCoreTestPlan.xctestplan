@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "AB67E197-29D5-4924-85A7-8B11EE275466",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "MUCCoreTests",
+        "name" : "MUCCoreTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,5 +1,6 @@
-import MUCAPI
-import MUCImpl
+import CoreUI
+import MUCHomeAPI
+import MUCHomeImpl
 import SwiftUI
 
 @MainActor

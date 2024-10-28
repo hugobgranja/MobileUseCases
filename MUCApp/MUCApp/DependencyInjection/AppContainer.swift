@@ -6,7 +6,10 @@ class AppContainer {
     private let container = Container()
 
     func assemble() {
-        LoginAssembler.assemble(container)
+        SecureStorageAssembler.assemble(container)
+        MUCCoreAssembler.assemble(container)
+        MUCLoginAssembler.assemble(container)
+        AppAssembler.assemble(container)
     }
 
     func resolve<T>(_ type: T.Type) -> T {

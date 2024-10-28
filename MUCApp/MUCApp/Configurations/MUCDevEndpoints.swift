@@ -1,5 +1,5 @@
 import Foundation
-import MUCAPI
+import MUCCoreAPI
 
 struct DevEndpoints: MUCEndpoints {
     private let base: String

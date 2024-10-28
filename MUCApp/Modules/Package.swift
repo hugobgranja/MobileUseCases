@@ -7,6 +7,133 @@ let package = Package(
     platforms: [.iOS(.v18)]
 )
 
+// MARK: CoreUI
+package.targets.append(contentsOf: [
+    .target(
+        name: "CoreUI",
+        path: "CoreUI/Sources"
+    )
+])
+
+// MARK: MUCHome
+package.targets.append(contentsOf: [
+    .target(
+        name: "MUCHomeAPI",
+        path: "MUCHome/Sources/API"
+    ),
+    .target(
+        name: "MUCHomeImpl",
+        dependencies: [
+            "CoreUI",
+            "MUCHomeAPI",
+            "MUCHomeMocks"
+        ],
+        path: "MUCHome/Sources/Impl"
+    ),
+    .target(
+        name: "MUCHomeMocks",
+        dependencies: ["MUCHomeAPI"],
+        path: "MUCHome/Mocks"
+    )
+])
+
+package.products.append(contentsOf: [
+    .library(
+        name: "MUCHomeAPI",
+        targets: ["MUCHomeAPI"]
+    ),
+    .library(
+        name: "MUCHomeImpl",
+        targets: ["MUCHomeImpl"]
+    )
+])
+
+// MARK: MUCLogin
+package.targets.append(contentsOf: [
+    .target(
+        name: "MUCLoginAPI",
+        path: "MUCLogin/Sources/API"
+    ),
+    .target(
+        name: "MUCLoginImpl",
+        dependencies: [
+            "CoreUI",
+            "MUCLoginAPI",
+            "MUCLoginMocks",
+            "MUCCoreMocks"
+        ],
+        path: "MUCLogin/Sources/Impl"
+    ),
+    .target(
+        name: "MUCLoginMocks",
+        dependencies: ["MUCLoginAPI"],
+        path: "MUCLogin/Mocks"
+    ),
+    .testTarget(
+        name: "MUCLoginTests",
+        dependencies: [
+            "MUCLoginAPI",
+            "MUCLoginImpl"
+        ],
+        path: "MUCLogin/Tests"
+    )
+])
+
+package.products.append(contentsOf: [
+    .library(
+        name: "MUCLoginAPI",
+        targets: ["MUCLoginAPI"]
+    ),
+    .library(
+        name: "MUCLoginImpl",
+        targets: ["MUCLoginImpl"]
+    )
+])
+
+// MARK: MUCCore
+package.targets.append(contentsOf: [
+    .target(
+        name: "MUCCoreAPI",
+        path: "MUCCore/Sources/API"
+    ),
+    .target(
+        name: "MUCCoreImpl",
+        dependencies: [
+            "MUCCoreAPI",
+            "MUCCoreMocks",
+            "SecureStorageAPI"
+        ],
+        path: "MUCCore/Sources/Impl"
+    ),
+    .target(
+        name: "MUCCoreMocks",
+        dependencies: ["MUCCoreAPI"],
+        path: "MUCCore/Mocks"
+    ),
+    .testTarget(
+        name: "MUCCoreTests",
+        dependencies: [
+            "MUCCoreAPI",
+            "MUCCoreImpl",
+            "MUCCoreMocks",
+            "SecureStorageMocks"
+        ],
+        path: "MUCCore/Tests"
+    )
+])
+
+package.products.append(contentsOf: [
+    .library(
+        name: "MUCCoreAPI",
+        targets: ["MUCCoreAPI"]
+    ),
+    .library(
+        name: "MUCCoreImpl",
+        targets: ["MUCCoreImpl"]
+    )
+])
+
+
 // MARK: SecureStorage
 package.targets.append(contentsOf: [
     .target(
@@ -42,48 +169,5 @@ package.products.append(contentsOf: [
     .library(
         name: "SecureStorageImpl",
         targets: ["SecureStorageImpl"]
-    )
-])
-
-// MARK: MUC
-package.targets.append(contentsOf: [
-    .target(
-        name: "MUCAPI",
-        path: "MUC/Sources/API"
-    ),
-    .target(
-        name: "MUCImpl",
-        dependencies: [
-            "MUCAPI",
-            "MUCMocks",
-            "SecureStorageAPI"
-        ],
-        path: "MUC/Sources/Impl"
-    ),
-    .target(
-        name: "MUCMocks",
-        dependencies: ["MUCAPI"],
-        path: "MUC/Mocks"
-    ),
-    .testTarget(
-        name: "MUCTests",
-        dependencies: [
-            "MUCAPI",
-            "MUCImpl",
-            "MUCMocks",
-            "SecureStorageMocks"
-        ],
-        path: "MUC/Tests"
-    )
-])
-
-package.products.append(contentsOf: [
-    .library(
-        name: "MUCAPI",
-        targets: ["MUCAPI"]
-    ),
-    .library(
-        name: "MUCImpl",
-        targets: ["MUCImpl"]
     )
 ])

@@ -9,8 +9,12 @@
 /* Begin PBXBuildFile section */
 		B94AEC7F2CC6C960003C2848 /* SecureStorageAPI in Frameworks */ = {isa = PBXBuildFile; productRef = B94AEC7E2CC6C960003C2848 /* SecureStorageAPI */; };
 		B993A7852CCFEA0F00328A8C /* BackpackDI in Frameworks */ = {isa = PBXBuildFile; productRef = B993A7842CCFEA0F00328A8C /* BackpackDI */; };
-		B9C92DB52CB04CB100E9DBB4 /* MUCAPI in Frameworks */ = {isa = PBXBuildFile; productRef = B9C92DB42CB04CB100E9DBB4 /* MUCAPI */; };
-		B9CFC9F42CC1720100A28673 /* MUCImpl in Frameworks */ = {isa = PBXBuildFile; productRef = B9CFC9F32CC1720100A28673 /* MUCImpl */; };
+		B993A7882CCFF29200328A8C /* MUCLoginAPI in Frameworks */ = {isa = PBXBuildFile; productRef = B993A7872CCFF29200328A8C /* MUCLoginAPI */; };
+		B993A78A2CCFF29200328A8C /* MUCLoginImpl in Frameworks */ = {isa = PBXBuildFile; productRef = B993A7892CCFF29200328A8C /* MUCLoginImpl */; };
+		B993A7992CCFFCD800328A8C /* MUCCoreAPI in Frameworks */ = {isa = PBXBuildFile; productRef = B993A7982CCFFCD800328A8C /* MUCCoreAPI */; };
+		B993A79B2CCFFCD800328A8C /* MUCCoreImpl in Frameworks */ = {isa = PBXBuildFile; productRef = B993A79A2CCFFCD800328A8C /* MUCCoreImpl */; };
+		B993A79D2CCFFD4400328A8C /* MUCHomeAPI in Frameworks */ = {isa = PBXBuildFile; productRef = B993A79C2CCFFD4400328A8C /* MUCHomeAPI */; };
+		B993A79F2CCFFD4400328A8C /* MUCHomeImpl in Frameworks */ = {isa = PBXBuildFile; productRef = B993A79E2CCFFD4400328A8C /* MUCHomeImpl */; };
 		B9CFC9F62CC1741900A28673 /* SecureStorageImpl in Frameworks */ = {isa = PBXBuildFile; productRef = B9CFC9F52CC1741900A28673 /* SecureStorageImpl */; };
 /* End PBXBuildFile section */
 
@@ -61,11 +65,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9CFC9F42CC1720100A28673 /* MUCImpl in Frameworks */,
-				B9C92DB52CB04CB100E9DBB4 /* MUCAPI in Frameworks */,
 				B993A7852CCFEA0F00328A8C /* BackpackDI in Frameworks */,
+				B993A78A2CCFF29200328A8C /* MUCLoginImpl in Frameworks */,
+				B993A79D2CCFFD4400328A8C /* MUCHomeAPI in Frameworks */,
 				B94AEC7F2CC6C960003C2848 /* SecureStorageAPI in Frameworks */,
 				B9CFC9F62CC1741900A28673 /* SecureStorageImpl in Frameworks */,
+				B993A7992CCFFCD800328A8C /* MUCCoreAPI in Frameworks */,
+				B993A79F2CCFFD4400328A8C /* MUCHomeImpl in Frameworks */,
+				B993A79B2CCFFCD800328A8C /* MUCCoreImpl in Frameworks */,
+				B993A7882CCFF29200328A8C /* MUCLoginAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +101,7 @@
 				B94D38872CAAE7C6007970AB /* MUCApp */,
 				B94D389A2CAAE7C8007970AB /* MUCAppTests */,
 				B94D38A42CAAE7C8007970AB /* MUCAppUITests */,
+				B993A7862CCFF29200328A8C /* Frameworks */,
 				B94D38862CAAE7C6007970AB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -105,6 +114,13 @@
 				B94D38A12CAAE7C8007970AB /* MUCAppUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B993A7862CCFF29200328A8C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,6 +149,12 @@
 				B94AEC7E2CC6C960003C2848 /* SecureStorageAPI */,
 				B94AEC8B2CC94B8D003C2848 /* DependencyInjection */,
 				B993A7842CCFEA0F00328A8C /* BackpackDI */,
+				B993A7872CCFF29200328A8C /* MUCLoginAPI */,
+				B993A7892CCFF29200328A8C /* MUCLoginImpl */,
+				B993A7982CCFFCD800328A8C /* MUCCoreAPI */,
+				B993A79A2CCFFCD800328A8C /* MUCCoreImpl */,
+				B993A79C2CCFFD4400328A8C /* MUCHomeAPI */,
+				B993A79E2CCFFD4400328A8C /* MUCHomeImpl */,
 			);
 			productName = MUCApp;
 			productReference = B94D38852CAAE7C6007970AB /* MUCApp.app */;
@@ -605,6 +627,30 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B993A7832CCFEA0F00328A8C /* XCRemoteSwiftPackageReference "BackpackDI" */;
 			productName = BackpackDI;
+		};
+		B993A7872CCFF29200328A8C /* MUCLoginAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MUCLoginAPI;
+		};
+		B993A7892CCFF29200328A8C /* MUCLoginImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MUCLoginImpl;
+		};
+		B993A7982CCFFCD800328A8C /* MUCCoreAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MUCCoreAPI;
+		};
+		B993A79A2CCFFCD800328A8C /* MUCCoreImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MUCCoreImpl;
+		};
+		B993A79C2CCFFD4400328A8C /* MUCHomeAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MUCHomeAPI;
+		};
+		B993A79E2CCFFD4400328A8C /* MUCHomeImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MUCHomeImpl;
 		};
 		B9C92DB42CB04CB100E9DBB4 /* MUCAPI */ = {
 			isa = XCSwiftPackageProductDependency;

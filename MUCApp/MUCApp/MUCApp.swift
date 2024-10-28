@@ -1,7 +1,5 @@
 import SwiftUI
 import SwiftData
-import MUCAPI
-import MUCImpl
 
 @main
 struct MUCApp: App {

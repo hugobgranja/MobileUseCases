@@ -1,7 +1,6 @@
-import MUCAPI
-import MUCImpl
-import SecureStorageAPI
-import SecureStorageImpl
+import CoreUI
+import MUCLoginAPI
+import MUCLoginImpl
 import SwiftUI
 
 @MainActor

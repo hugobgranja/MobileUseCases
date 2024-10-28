@@ -1,4 +1,4 @@
 import Foundation
-import MUCAPI
+import MUCCoreAPI
 
 extension URLSession: @retroactive URLRequester {}
