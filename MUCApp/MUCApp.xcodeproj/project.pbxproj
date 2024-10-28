@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B94AEC7F2CC6C960003C2848 /* SecureStorageAPI in Frameworks */ = {isa = PBXBuildFile; productRef = B94AEC7E2CC6C960003C2848 /* SecureStorageAPI */; };
-		B94AEC8C2CC94B8D003C2848 /* DependencyInjection in Frameworks */ = {isa = PBXBuildFile; productRef = B94AEC8B2CC94B8D003C2848 /* DependencyInjection */; };
+		B993A7852CCFEA0F00328A8C /* BackpackDI in Frameworks */ = {isa = PBXBuildFile; productRef = B993A7842CCFEA0F00328A8C /* BackpackDI */; };
 		B9C92DB52CB04CB100E9DBB4 /* MUCAPI in Frameworks */ = {isa = PBXBuildFile; productRef = B9C92DB42CB04CB100E9DBB4 /* MUCAPI */; };
 		B9CFC9F42CC1720100A28673 /* MUCImpl in Frameworks */ = {isa = PBXBuildFile; productRef = B9CFC9F32CC1720100A28673 /* MUCImpl */; };
 		B9CFC9F62CC1741900A28673 /* SecureStorageImpl in Frameworks */ = {isa = PBXBuildFile; productRef = B9CFC9F52CC1741900A28673 /* SecureStorageImpl */; };
@@ -62,8 +62,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9CFC9F42CC1720100A28673 /* MUCImpl in Frameworks */,
-				B94AEC8C2CC94B8D003C2848 /* DependencyInjection in Frameworks */,
 				B9C92DB52CB04CB100E9DBB4 /* MUCAPI in Frameworks */,
+				B993A7852CCFEA0F00328A8C /* BackpackDI in Frameworks */,
 				B94AEC7F2CC6C960003C2848 /* SecureStorageAPI in Frameworks */,
 				B9CFC9F62CC1741900A28673 /* SecureStorageImpl in Frameworks */,
 			);
@@ -93,7 +93,6 @@
 				B94D38872CAAE7C6007970AB /* MUCApp */,
 				B94D389A2CAAE7C8007970AB /* MUCAppTests */,
 				B94D38A42CAAE7C8007970AB /* MUCAppUITests */,
-				B9C92DB12CB042F700E9DBB4 /* Frameworks */,
 				B94D38862CAAE7C6007970AB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -106,13 +105,6 @@
 				B94D38A12CAAE7C8007970AB /* MUCAppUITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		B9C92DB12CB042F700E9DBB4 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +132,7 @@
 				B9CFC9F52CC1741900A28673 /* SecureStorageImpl */,
 				B94AEC7E2CC6C960003C2848 /* SecureStorageAPI */,
 				B94AEC8B2CC94B8D003C2848 /* DependencyInjection */,
+				B993A7842CCFEA0F00328A8C /* BackpackDI */,
 			);
 			productName = MUCApp;
 			productReference = B94D38852CAAE7C6007970AB /* MUCApp.app */;
@@ -224,6 +217,7 @@
 			mainGroup = B94D387C2CAAE7C6007970AB;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				B993A7832CCFEA0F00328A8C /* XCRemoteSwiftPackageReference "BackpackDI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B94D38862CAAE7C6007970AB /* Products */;
@@ -587,6 +581,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		B993A7832CCFEA0F00328A8C /* XCRemoteSwiftPackageReference "BackpackDI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hugobgranja/BackpackDI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		B94AEC7E2CC6C960003C2848 /* SecureStorageAPI */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -595,6 +600,11 @@
 		B94AEC8B2CC94B8D003C2848 /* DependencyInjection */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DependencyInjection;
+		};
+		B993A7842CCFEA0F00328A8C /* BackpackDI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B993A7832CCFEA0F00328A8C /* XCRemoteSwiftPackageReference "BackpackDI" */;
+			productName = BackpackDI;
 		};
 		B9C92DB42CB04CB100E9DBB4 /* MUCAPI */ = {
 			isa = XCSwiftPackageProductDependency;

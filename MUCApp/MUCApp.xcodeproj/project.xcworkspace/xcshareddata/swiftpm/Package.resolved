@@ -1,0 +1,15 @@
+{
+  "originHash" : "2c875a272ef37a327f56a0f5ad0cc1952ddaa63ea8f66c0dd54d718af4708e35",
+  "pins" : [
+    {
+      "identity" : "backpackdi",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hugobgranja/BackpackDI",
+      "state" : {
+        "revision" : "a9126c5eae120acea1673d35871b7bfc26853ece",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}

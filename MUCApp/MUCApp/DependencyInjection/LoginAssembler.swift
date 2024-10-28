@@ -1,5 +1,5 @@
 import Foundation
-import DependencyInjection
+import BackpackDI
 import MUCAPI
 import MUCImpl
 import SecureStorageAPI

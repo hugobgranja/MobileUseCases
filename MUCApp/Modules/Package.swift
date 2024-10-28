@@ -7,28 +7,6 @@ let package = Package(
     platforms: [.iOS(.v18)]
 )
 
-// MARK: DI
-package.targets.append(contentsOf: [
-    .target(
-        name: "DependencyInjection",
-        path: "DependencyInjection/Sources"
-    ),
-    .testTarget(
-        name: "DependencyInjectionTests",
-        dependencies: [
-            "DependencyInjection"
-        ],
-        path: "DependencyInjection/Tests"
-    )
-])
-
-package.products.append(contentsOf: [
-    .library(
-        name: "DependencyInjection",
-        targets: ["DependencyInjection"]
-    )
-])
-
 // MARK: SecureStorage
 package.targets.append(contentsOf: [
     .target(
