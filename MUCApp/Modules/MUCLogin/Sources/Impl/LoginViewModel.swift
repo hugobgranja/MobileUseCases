@@ -1,4 +1,4 @@
-import Foundation
+import CoreUI
 import MUCCoreAPI
 import SwiftUI
 
@@ -8,25 +8,39 @@ public final class LoginViewModel: Sendable {
     enum Event {
         case loginSuccessful
     }
-    
+
     private let authRepository: AuthRepository
+    private let stringRepository: StringRepository
+
     var email: String = ""
     var password: String = ""
+    var errorState: ErrorState = .invisible
     private(set) var isLoading: Bool = false
-    private(set) var errorMessage: String?
     private(set) var event: Event?
     
     var isFormValid: Bool {
         !email.isEmpty && !password.isEmpty
     }
     
-    public init(authRepository: AuthRepository) {
+    public init(
+        authRepository: AuthRepository,
+        stringRepository: StringRepository
+    ) {
         self.authRepository = authRepository
+        self.stringRepository = stringRepository
     }
-    
+
+    func localize(_ key: LSKey) -> String {
+        stringRepository.get(key)
+    }
+
     func login() async {
         guard isFormValid else {
-            errorMessage = "Please fill in all fields."
+            errorState = .visible(
+                title: localize(LSKey.error),
+                message: localize(LSKey.fillAllFields),
+                buttonTitle: localize(LSKey.ok)
+            )
             return
         }
         
@@ -38,7 +52,11 @@ public final class LoginViewModel: Sendable {
             clearFields()
         }
         catch {
-            errorMessage = "There was a problem processing your login.\nPlease try again."
+            errorState = .visible(
+                title: localize(LSKey.error),
+                message: localize(LSKey.generalError),
+                buttonTitle: localize(LSKey.ok)
+            )
         }
         
         isLoading = false

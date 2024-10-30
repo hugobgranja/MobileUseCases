@@ -24,39 +24,39 @@ public struct LoginView: View {
                 AppLogoView(width: 150, height: 150)
                     .symbolEffect(.bounce, options: .nonRepeating)
 
-                Text("Login")
+                Text(viewModel.localize(LSKey.title))
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
                     .padding(.top, 40)
                     .padding(.bottom, 4)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Text("Sign in to continue.")
+
+                Text(viewModel.localize(LSKey.subtitle))
                     .font(.headline)
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+
              
-                TextField("Email", text: $viewModel.email)
+                TextField(viewModel.localize(LSKey.email), text: $viewModel.email)
                     .modifier(EmailFieldViewModifier())
                     .modifier(FormFieldViewModifier())
                 
-                PasswordFieldView("Password", password: $viewModel.password)
+                PasswordFieldView(viewModel.localize(LSKey.password), password: $viewModel.password)
                     .modifier(FormFieldViewModifier())
-                
-                Button(action: {
+
+                PrimaryButtonView(viewModel.localize(LSKey.primaryButtonTitle)) {
                     Task {
                         await viewModel.login()
                     }
-                }) {
-                    PrimaryButtonView("Login")
                 }
                 .padding(.top, 10)
             }
             .padding(.horizontal, 40)
         }
-        .onChange(of: viewModel.event, initial: false) { _, new in handleEvent(new) }
+        .overlayError($viewModel.errorState)
+        .onChange(of: viewModel.event, initial: false) { _, new in handleEvent(new)
+        }
     }
     
     private func handleEvent(_ event: LoginViewModel.Event?) {
@@ -70,7 +70,9 @@ public struct LoginView: View {
 }
 
 #Preview {
-    let authRepository = AuthRepositoryMock()
-    let viewModel = LoginViewModel(authRepository: authRepository)
+    let viewModel = LoginViewModel(
+        authRepository: AuthRepositoryMock(),
+        stringRepository: StringRepositoryMock()
+    )
     LoginView(viewModel: viewModel, navDelegate: LoginNavDelegateMock())
 }

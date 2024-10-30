@@ -13,11 +13,8 @@ public struct HomeView: View {
     public var body: some View {
         Text("Home")
 
-        Button(action: {
+        PrimaryButtonView("Go to detail") {
             navDelegate.onDetail()
-        }) {
-            PrimaryButtonView("Go to detail")
-                .padding()
         }
     }
 }

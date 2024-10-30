@@ -15,6 +15,13 @@ package.targets.append(contentsOf: [
     )
 ])
 
+package.products.append(contentsOf: [
+    .library(
+        name: "CoreUI",
+        targets: ["CoreUI"]
+    )
+])
+
 // MARK: MUCHome
 package.targets.append(contentsOf: [
     .target(
@@ -72,6 +79,7 @@ package.targets.append(contentsOf: [
     .testTarget(
         name: "MUCLoginTests",
         dependencies: [
+            "MUCCoreMocks",
             "MUCLoginAPI",
             "MUCLoginImpl"
         ],

@@ -27,5 +27,10 @@ public final class MUCCoreAssembler {
             lifetime: .singleton,
             using: AuthRepositoryImpl.init
         )
+
+        container.autoRegister(
+            StringRepository.self,
+            using: StringRepositoryImpl.init
+        )
     }
 }
