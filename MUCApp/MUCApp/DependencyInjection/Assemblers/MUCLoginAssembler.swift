@@ -1,5 +1,6 @@
 import Foundation
 import BackpackDI
+import MUCCoreAPI
 import MUCLoginAPI
 import MUCLoginImpl
 
@@ -11,7 +12,8 @@ public final class MUCLoginAssembler {
         container.register(LoginView.self) { r, loginNavDelegate in
             LoginView(
                 viewModel: r.resolve(LoginViewModel.self),
-                navDelegate: loginNavDelegate
+                navDelegate: loginNavDelegate,
+                stringRepository: r.resolve(StringRepository.self)
             )
         }
     }

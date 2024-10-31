@@ -17,12 +17,10 @@ struct MUCApp: App {
         }
     }()
 
-    private let container: AppContainer
+    private let container = AppContainer()
     private let appCoordinator: AppCoordinator
 
     init() {
-        self.container = AppContainer()
-        container.assemble()
         appCoordinator = container.resolve(AppCoordinator.self)
     }
 

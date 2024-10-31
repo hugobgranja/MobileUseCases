@@ -11,10 +11,10 @@ final class AppCoordinator {
     
     @Bindable var navPath = ObservableNavigationPath()
     private var childCoordinator: Any?
-    private let loginViewFactory: (LoginNavDelegate) -> LoginView
+    private let loginViewFactory: (LoginNavDelegate?) -> LoginView
 
     init(
-        loginViewFactory: @escaping (LoginNavDelegate) -> LoginView
+        loginViewFactory: @escaping (LoginNavDelegate?) -> LoginView
     ) {
         self.loginViewFactory = loginViewFactory
     }

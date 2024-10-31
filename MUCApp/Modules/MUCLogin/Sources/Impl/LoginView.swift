@@ -1,19 +1,23 @@
 import CoreUI
 import MUCLoginAPI
 import MUCLoginMocks
+import MUCCoreAPI
 import MUCCoreMocks
 import SwiftUI
 
 public struct LoginView: View {
     @Bindable var viewModel: LoginViewModel
-    private var navDelegate: any LoginNavDelegate
-    
+    private weak var navDelegate: (any LoginNavDelegate)?
+    private let stringRepository: StringRepository
+
     public init(
         viewModel: LoginViewModel,
-        navDelegate: any LoginNavDelegate
+        navDelegate: (any LoginNavDelegate)?,
+        stringRepository: StringRepository
     ) {
         self.viewModel = viewModel
         self.navDelegate = navDelegate
+        self.stringRepository = stringRepository
     }
 
     public var body: some View {
@@ -24,7 +28,7 @@ public struct LoginView: View {
                 AppLogoView(width: 150, height: 150)
                     .symbolEffect(.bounce, options: .nonRepeating)
 
-                Text(viewModel.localize(LSKey.title))
+                Text(stringRepository.get(LSKey.title))
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
@@ -32,20 +36,20 @@ public struct LoginView: View {
                     .padding(.bottom, 4)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text(viewModel.localize(LSKey.subtitle))
+                Text(stringRepository.get(LSKey.subtitle))
                     .font(.headline)
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
              
-                TextField(viewModel.localize(LSKey.email), text: $viewModel.email)
+                TextField(stringRepository.get(LSKey.email), text: $viewModel.email)
                     .modifier(EmailFieldViewModifier())
                     .modifier(FormFieldViewModifier())
                 
-                PasswordFieldView(viewModel.localize(LSKey.password), password: $viewModel.password)
+                PasswordFieldView(stringRepository.get(LSKey.password), password: $viewModel.password)
                     .modifier(FormFieldViewModifier())
 
-                PrimaryButtonView(viewModel.localize(LSKey.primaryButtonTitle)) {
+                PrimaryButtonView(stringRepository.get(LSKey.primaryButtonTitle)) {
                     Task {
                         await viewModel.login()
                     }
@@ -64,7 +68,7 @@ public struct LoginView: View {
         
         switch event {
         case .loginSuccessful:
-            navDelegate.onLoginSuccessful()
+            navDelegate?.onLoginSuccessful()
         }
     }
 }
@@ -74,5 +78,9 @@ public struct LoginView: View {
         authRepository: AuthRepositoryMock(),
         stringRepository: StringRepositoryMock()
     )
-    LoginView(viewModel: viewModel, navDelegate: LoginNavDelegateMock())
+    LoginView(
+        viewModel: viewModel,
+        navDelegate: LoginNavDelegateMock(),
+        stringRepository: StringRepositoryMock()
+    )
 }

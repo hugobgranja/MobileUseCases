@@ -5,6 +5,10 @@ import BackpackDI
 class AppContainer {
     private let container = Container()
 
+    init() {
+        assemble()
+    }
+
     func assemble() {
         SecureStorageAssembler.assemble(container)
         MUCCoreAssembler.assemble(container)
