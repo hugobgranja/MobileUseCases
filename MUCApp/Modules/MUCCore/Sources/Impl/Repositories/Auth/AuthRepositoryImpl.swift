@@ -1,5 +1,4 @@
 import Foundation
-import MUCLoginAPI
 import MUCCoreAPI
 import SecureStorageAPI
 
@@ -28,12 +27,11 @@ public actor AuthRepositoryImpl: AuthRepository {
             let request = LoginRequest(email: email, password: password)
             
             tokenTask = Task { [client] in
-                let response: MUCDataResponse<LoginResponse>
-                response = try await client.request(url: url, method: .post, body: request)
-                
-                let token = response.decodedData.toToken()
-                await setToken(response.decodedData.toToken())
-                
+                let token = try await client.request(url: url, method: .post, body: request)
+                    .decode(LoginResponse.self)
+                    .toToken()
+
+                await setToken(token)
                 return token
             }
         }
@@ -93,12 +91,11 @@ public actor AuthRepositoryImpl: AuthRepository {
             let request = RefreshRequest(refreshToken: refreshToken)
             
             tokenTask = Task { [client] in
-                let response: MUCDataResponse<RefreshResponse>
-                response = try await client.request(url: url, method: .post, body: request)
+                let token = try await client.request(url: url, method: .post, body: request)
+                    .decode(RefreshResponse.self)
+                    .toToken()
                 
-                let token = response.decodedData.toToken()
                 await setToken(token)
-                
                 return token
             }
         }

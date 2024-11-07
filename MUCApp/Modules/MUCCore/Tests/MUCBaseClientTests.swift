@@ -13,8 +13,6 @@ struct MUCBaseClientTests {
     enum Constants {
         static let url = "http://localhost:8080"
         static let acceptHeader = ["Accept": "application/json"]
-        static let headersForEmptyBodyRequest = [String: String]()
-        static let headersForNonEmptyBodyRequest = ["Content-Type": "application/json"]
         
         static let token = Token(
             accessToken: "123",
@@ -36,11 +34,11 @@ struct MUCBaseClientTests {
     }
     
     @Test(
-        "Request sending no data and retrieving no data sends correct headers",
-        arguments: [[:], Constants.acceptHeader]
+        "Request sending no data sends correct headers",
+        arguments: [nil, [:], Constants.acceptHeader]
     )
-    func requestSendNoDataRetrieveNoDataSendsAuthHeader(
-        requestHeaders: [String: String]
+    func requestSendingNoDataSendsCorrectHeaders(
+        requestHeaders: [String: String]?
     ) async throws {
         // Act
         let _ = try await sut.request(
@@ -51,41 +49,20 @@ struct MUCBaseClientTests {
         
         // Assert
         let requestedHeaders = try #require(urlRequester.requestedHeaders)
-        let expectedHeaders = requestHeaders.mergingKeepingCurrent(Constants.headersForEmptyBodyRequest)
+        let expectedHeaders = [:].mergingKeepingCurrent(requestHeaders)
         #expect(requestedHeaders == expectedHeaders)
     }
-    
+
     @Test(
-        "Request sending no data and retrieving data sends correct headers",
-        arguments: [[:], Constants.acceptHeader]
+        "Request sending data sends correct headers",
+        arguments: [nil, [:], Constants.acceptHeader]
     )
-    func requestSendNoDataRetrieveDataSendsAuthHeader(
-        requestHeaders: [String: String]
+    func requestSendingDataSendsCorrectHeaders(
+        requestHeaders: [String: String]?
     ) async throws {
         // Arrange
-        let tokenData = try Self.encoder.encode(Constants.token)
-        urlRequester.setResponseData(tokenData)
-        
-        // Act
-        let _: MUCDataResponse<Token> = try await sut.request(
-            url: Constants.url,
-            method: .get,
-            headers: requestHeaders
-        )
-        
-        // Assert
-        let requestedHeaders = try #require(urlRequester.requestedHeaders)
-        let expectedHeaders = requestHeaders.mergingKeepingCurrent(Constants.headersForEmptyBodyRequest)
-        #expect(requestedHeaders == expectedHeaders)
-    }
-    
-    @Test(
-        "Request sending data and retrieving no data sends correct headers",
-        arguments: [[:], Constants.acceptHeader]
-    )
-    func requestSendDataRetrieveNoDataSendsAuthHeader(
-        requestHeaders: [String: String]
-    ) async throws {
+        let contentTypeHeader = ["Content-Type": "application/json"]
+
         // Act
         let _ = try await sut.request(
             url: Constants.url,
@@ -96,32 +73,7 @@ struct MUCBaseClientTests {
         
         // Assert
         let requestedHeaders = try #require(urlRequester.requestedHeaders)
-        let expectedHeaders = requestHeaders.mergingKeepingCurrent(Constants.headersForNonEmptyBodyRequest)
-        #expect(requestedHeaders == expectedHeaders)
-    }
-    
-    @Test(
-        "Request sending data and retrieving data sends correct headers",
-        arguments: [[:], Constants.acceptHeader]
-    )
-    func requestSendDataRetrieveDataSendsAuthHeader(
-        requestHeaders: [String: String]
-    ) async throws {
-        // Arrange
-        let tokenData = try Self.encoder.encode(Constants.token)
-        urlRequester.setResponseData(tokenData)
-        
-        // Act
-        let _: MUCDataResponse<Token> = try await sut.request(
-            url: Constants.url,
-            method: .get,
-            body: Constants.token,
-            headers: requestHeaders
-        )
-        
-        //Assert
-        let requestedHeaders = try #require(urlRequester.requestedHeaders)
-        let expectedHeaders = requestHeaders.mergingKeepingCurrent(Constants.headersForNonEmptyBodyRequest)
+        let expectedHeaders = contentTypeHeader.mergingKeepingCurrent(requestHeaders)
         #expect(requestedHeaders == expectedHeaders)
     }
 }

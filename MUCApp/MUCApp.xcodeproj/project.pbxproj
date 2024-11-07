@@ -143,11 +143,8 @@
 			);
 			name = MUCApp;
 			packageProductDependencies = (
-				B9C92DB42CB04CB100E9DBB4 /* MUCAPI */,
-				B9CFC9F32CC1720100A28673 /* MUCImpl */,
 				B9CFC9F52CC1741900A28673 /* SecureStorageImpl */,
 				B94AEC7E2CC6C960003C2848 /* SecureStorageAPI */,
-				B94AEC8B2CC94B8D003C2848 /* DependencyInjection */,
 				B993A7842CCFEA0F00328A8C /* BackpackDI */,
 				B993A7872CCFF29200328A8C /* MUCLoginAPI */,
 				B993A7892CCFF29200328A8C /* MUCLoginImpl */,
@@ -621,10 +618,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SecureStorageAPI;
 		};
-		B94AEC8B2CC94B8D003C2848 /* DependencyInjection */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DependencyInjection;
-		};
 		B993A7842CCFEA0F00328A8C /* BackpackDI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B993A7832CCFEA0F00328A8C /* XCRemoteSwiftPackageReference "BackpackDI" */;
@@ -653,14 +646,6 @@
 		B993A79E2CCFFD4400328A8C /* MUCHomeImpl */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MUCHomeImpl;
-		};
-		B9C92DB42CB04CB100E9DBB4 /* MUCAPI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MUCAPI;
-		};
-		B9CFC9F32CC1720100A28673 /* MUCImpl */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MUCImpl;
 		};
 		B9CFC9F52CC1741900A28673 /* SecureStorageImpl */ = {
 			isa = XCSwiftPackageProductDependency;

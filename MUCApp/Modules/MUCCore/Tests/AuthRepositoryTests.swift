@@ -28,8 +28,8 @@ struct AuthRepositoryTests {
             refreshTokenExpiration: Date.now.addingTimeInterval(3600)
         )
         
-        client.responseData = loginResponse
-        
+        client.decodedData = loginResponse
+
         // Act
         try await authRepository.login(email: "a@muctest.com", password: "123")
         
@@ -60,7 +60,7 @@ struct AuthRepositoryTests {
         )
         
         // Act
-        client.responseData = loginResponse
+        client.decodedData = loginResponse
         try await authRepository.login(email: "a@muctest.com", password: "123")
         let accessToken = try await authRepository.getAccessToken()
         
@@ -86,10 +86,10 @@ struct AuthRepositoryTests {
         )
         
         // Act
-        client.responseData = loginResponse
+        client.decodedData = loginResponse
         try await authRepository.login(email: "a@muctest.com", password: "123")
         
-        client.responseData = refreshResponse
+        client.decodedData = refreshResponse
         let accessToken = try await authRepository.getAccessToken()
         
         // Assert
@@ -110,7 +110,7 @@ struct AuthRepositoryTests {
         )
         
         // Act
-        client.responseData = loginResponse
+        client.decodedData = loginResponse
         try await authRepository.login(email: "a@muctest.com", password: "123")
         
         // Assert

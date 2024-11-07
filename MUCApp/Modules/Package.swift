@@ -22,6 +22,48 @@ package.products.append(contentsOf: [
     )
 ])
 
+// MARK: MUCCore
+package.targets.append(contentsOf: [
+    .target(
+        name: "MUCCoreAPI",
+        path: "MUCCore/Sources/API"
+    ),
+    .target(
+        name: "MUCCoreImpl",
+        dependencies: [
+            "MUCCoreAPI",
+            "SecureStorageAPI"
+        ],
+        path: "MUCCore/Sources/Impl"
+    ),
+    .target(
+        name: "MUCCoreMocks",
+        dependencies: ["MUCCoreAPI"],
+        path: "MUCCore/Mocks"
+    ),
+    .testTarget(
+        name: "MUCCoreTests",
+        dependencies: [
+            "MUCCoreAPI",
+            "MUCCoreImpl",
+            "MUCCoreMocks",
+            "SecureStorageMocks"
+        ],
+        path: "MUCCore/Tests"
+    )
+])
+
+package.products.append(contentsOf: [
+    .library(
+        name: "MUCCoreAPI",
+        targets: ["MUCCoreAPI"]
+    ),
+    .library(
+        name: "MUCCoreImpl",
+        targets: ["MUCCoreImpl"]
+    )
+])
+
 // MARK: MUCHome
 package.targets.append(contentsOf: [
     .target(
@@ -97,50 +139,6 @@ package.products.append(contentsOf: [
         targets: ["MUCLoginImpl"]
     )
 ])
-
-// MARK: MUCCore
-package.targets.append(contentsOf: [
-    .target(
-        name: "MUCCoreAPI",
-        path: "MUCCore/Sources/API"
-    ),
-    .target(
-        name: "MUCCoreImpl",
-        dependencies: [
-            "MUCCoreAPI",
-            "MUCCoreMocks",
-            "SecureStorageAPI"
-        ],
-        path: "MUCCore/Sources/Impl"
-    ),
-    .target(
-        name: "MUCCoreMocks",
-        dependencies: ["MUCCoreAPI"],
-        path: "MUCCore/Mocks"
-    ),
-    .testTarget(
-        name: "MUCCoreTests",
-        dependencies: [
-            "MUCCoreAPI",
-            "MUCCoreImpl",
-            "MUCCoreMocks",
-            "SecureStorageMocks"
-        ],
-        path: "MUCCore/Tests"
-    )
-])
-
-package.products.append(contentsOf: [
-    .library(
-        name: "MUCCoreAPI",
-        targets: ["MUCCoreAPI"]
-    ),
-    .library(
-        name: "MUCCoreImpl",
-        targets: ["MUCCoreImpl"]
-    )
-])
-
 
 // MARK: SecureStorage
 package.targets.append(contentsOf: [

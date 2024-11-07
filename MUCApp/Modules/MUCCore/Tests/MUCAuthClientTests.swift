@@ -51,10 +51,10 @@ struct MUCAuthClientTests {
     }
     
     @Test(
-        "Request sending no data and retrieving no data sends authorization header",
+        "Request sends authorization header",
         arguments: [nil, [:], Constants.acceptHeader]
     )
-    func requestSendNoDataRetrieveNoDataSendsAuthHeader(
+    func requestSendsAuthHeader(
         requestHeaders: [String: String]?
     ) async throws {
         // Act
@@ -67,76 +67,6 @@ struct MUCAuthClientTests {
         // Assert
         let requestedHeaders = try #require(urlRequester.requestedHeaders)
         let expectedHeaders = Constants.authHeader.mergingKeepingCurrent(requestHeaders)
-        #expect(requestedHeaders == expectedHeaders)
-    }
-    
-    @Test(
-        "Request sending no data and retrieving data sends authorization header",
-        arguments: [nil, [:], Constants.acceptHeader]
-    )
-    func requestSendNoDataRetrieveDataSendsAuthHeader(
-        requestHeaders: [String: String]?
-    ) async throws {
-        // Arrange
-        let tokenData = try Self.encoder.encode(Constants.token)
-        urlRequester.setResponseData(tokenData)
-        
-        // Act
-        let _: MUCDataResponse<Token> = try await sut.request(
-            url: Constants.url,
-            method: .get,
-            headers: requestHeaders
-        )
-        
-        // Assert
-        let requestedHeaders = try #require(urlRequester.requestedHeaders)
-        let expectedHeaders = Constants.authHeader.mergingKeepingCurrent(requestHeaders)
-        #expect(requestedHeaders == expectedHeaders)
-    }
-    
-    @Test(
-        "Requests sending data and retrieving no data sends authorization header",
-        arguments: [nil, [:], Constants.acceptHeader]
-    )
-    func requestSendDataRetrieveNoDataSendsAuthHeader(
-        requestHeaders: [String: String]?
-    ) async throws {
-        // Act
-        let _ = try await sut.request(
-            url: Constants.url,
-            method: .get,
-            body: Constants.token,
-            headers: requestHeaders
-        )
-        
-        // Assert
-        let requestedHeaders = try #require(urlRequester.requestedHeaders)
-        let expectedHeaders = Constants.headersForNonEmptyBodyRequest.mergingKeepingCurrent(requestHeaders)
-        #expect(requestedHeaders == expectedHeaders)
-    }
-    
-    @Test(
-        "Request sending data and retrieving data sends authorization header",
-        arguments: [nil, [:], Constants.acceptHeader]
-    )
-    func requestSendDataRetrieveDataSendsAuthHeader(
-        requestHeaders: [String: String]?
-    ) async throws {
-        // Arrange
-        let tokenData = try Self.encoder.encode(Constants.token)
-        urlRequester.setResponseData(tokenData)
-        
-        // Act
-        let _: MUCDataResponse<Token> = try await sut.request(
-            url: Constants.url,
-            method: .get,
-            body: Constants.token,
-            headers: requestHeaders
-        )
-        
-        //Assert
-        let requestedHeaders = try #require(urlRequester.requestedHeaders)
-        let expectedHeaders = Constants.headersForNonEmptyBodyRequest.mergingKeepingCurrent(requestHeaders)
         #expect(requestedHeaders == expectedHeaders)
     }
 }

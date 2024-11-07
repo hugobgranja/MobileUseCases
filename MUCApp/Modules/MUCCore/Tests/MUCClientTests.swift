@@ -26,7 +26,7 @@ struct MUCClientTests {
     
     // MARK: Test throw on invalid url
     @Test(
-        "Request sending no data and retrieving throws on invalid url",
+        "Request throws on invalid url",
         arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
     )
     func requestSendNoDataRetrieveNoDataThrowsOnInvalidUrl(
@@ -39,67 +39,6 @@ struct MUCClientTests {
                 let _ = try await sut.request(
                     url: Constants.invalidUrl,
                     method: .get,
-                    headers: [:]
-                )
-            }
-        )
-    }
-    
-    @Test(
-        "Request sending no data and retrieving data throws on invalid url",
-        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
-    )
-    func requestSendNoDataRetrieveDataThrowsOnInvalidUrl(
-        urlRequester: URLRequesterMock,
-        sut: MUCClient
-    ) async throws {
-        await #expect(
-            throws: MUCClientError.invalidUrl,
-            performing: {
-                let _: MUCDataResponse<Token> = try await sut.request(
-                    url: Constants.invalidUrl,
-                    method: .get,
-                    headers: [:]
-                )
-            }
-        )
-    }
-    
-    @Test(
-        "Requests sending data and retrieving no data sends throws on invalid url",
-        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
-    )
-    func requestSendDataRetrieveNoDataThrowsOnInvalidUrl(
-        urlRequester: URLRequesterMock,
-        sut: MUCClient
-    ) async throws {
-        await #expect(
-            throws: MUCClientError.invalidUrl,
-            performing: {
-                let _ = try await sut.request(
-                    url: Constants.invalidUrl,
-                    method: .get,
-                    body: Constants.token,
-                    headers: [:]
-                )
-            }
-        )
-    }
-    
-    @Test(
-        "Request sending data and retrieving data sends throws on invalid url",
-        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
-    )
-    func requestSendDataRetrieveDataThrowsOnInvalidUrl(
-        urlRequester: URLRequesterMock,
-        sut: MUCClient
-    ) async throws {
-        await #expect(
-            throws: MUCClientError.invalidUrl,
-            performing: {
-                let _: MUCDataResponse<Token> = try await sut.request(
-                    url: Constants.invalidUrl,
-                    method: .get,
                     body: Constants.token,
                     headers: [:]
                 )
@@ -107,9 +46,8 @@ struct MUCClientTests {
         )
     }
 
-    // MARK: Test throw on server error
     @Test(
-        "Request sending no data and retrieving throws serve error",
+        "Request throws on server error",
         arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
     )
     func requestSendNoDataRetrieveNoDataThrowsOnServerError(
@@ -124,50 +62,6 @@ struct MUCClientTests {
                 let _ = try await sut.request(
                     url: Constants.url,
                     method: .get,
-                    headers: [:]
-                )
-            }
-        )
-    }
-
-    @Test(
-        "Request sending no data and retrieving data throws on server error",
-        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
-    )
-    func requestSendNoDataRetrieveDataThrowsOnServerError(
-        urlRequester: URLRequesterMock,
-        sut: MUCClient
-    ) async throws {
-        urlRequester.setResponseStatusCode(500)
-
-        await #expect(
-            throws: MUCClientError.serverError(statusCode: 500),
-            performing: {
-                let _: MUCDataResponse<Token> = try await sut.request(
-                    url: Constants.url,
-                    method: .get,
-                    headers: [:]
-                )
-            }
-        )
-    }
-
-    @Test(
-        "Requests sending data and retrieving no data sends throws on server error",
-        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
-    )
-    func requestSendDataRetrieveNoDataThrowsOnServerError(
-        urlRequester: URLRequesterMock,
-        sut: MUCClient
-    ) async throws {
-        urlRequester.setResponseStatusCode(500)
-
-        await #expect(
-            throws: MUCClientError.serverError(statusCode: 500),
-            performing: {
-                let _ = try await sut.request(
-                    url: Constants.url,
-                    method: .get,
                     body: Constants.token,
                     headers: [:]
                 )
@@ -176,31 +70,7 @@ struct MUCClientTests {
     }
 
     @Test(
-        "Request sending data and retrieving data sends throws on server error",
-        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
-    )
-    func requestSendDataRetrieveDataThrowsOnServerError(
-        urlRequester: URLRequesterMock,
-        sut: MUCClient
-    ) async throws {
-        urlRequester.setResponseStatusCode(500)
-
-        await #expect(
-            throws: MUCClientError.serverError(statusCode: 500),
-            performing: {
-                let _: MUCDataResponse<Token> = try await sut.request(
-                    url: Constants.url,
-                    method: .get,
-                    body: Constants.token,
-                    headers: [:]
-                )
-            }
-        )
-    }
-
-    // MARK: Test throw on server unauthorized response
-    @Test(
-        "Request sending no data and retrieving throws unauthorized",
+        "Request throws on unauthorized",
         arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
     )
     func requestSendNoDataRetrieveNoDataThrowsOnUnauthorized(
@@ -215,171 +85,15 @@ struct MUCClientTests {
                 let _ = try await sut.request(
                     url: Constants.url,
                     method: .get,
-                    headers: [:]
-                )
-            }
-        )
-    }
-
-    @Test(
-        "Request sending no data and retrieving data throws on server error",
-        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
-    )
-    func requestSendNoDataRetrieveDataThrowsOnUnauthorized(
-        urlRequester: URLRequesterMock,
-        sut: MUCClient
-    ) async throws {
-        urlRequester.setResponseStatusCode(401)
-
-        await #expect(
-            throws: MUCClientError.unauthorized,
-            performing: {
-                let _: MUCDataResponse<Token> = try await sut.request(
-                    url: Constants.url,
-                    method: .get,
-                    headers: [:]
-                )
-            }
-        )
-    }
-
-    @Test(
-        "Requests sending data and retrieving no data sends throws on server error",
-        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
-    )
-    func requestSendDataRetrieveNoDataThrowsOnUnauthorized(
-        urlRequester: URLRequesterMock,
-        sut: MUCClient
-    ) async throws {
-        urlRequester.setResponseStatusCode(401)
-
-        await #expect(
-            throws: MUCClientError.unauthorized,
-            performing: {
-                let _ = try await sut.request(
-                    url: Constants.url,
-                    method: .get,
                     body: Constants.token,
                     headers: [:]
                 )
             }
         )
     }
-
-    @Test(
-        "Request sending data and retrieving data sends throws on server error",
-        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
-    )
-    func requestSendDataRetrieveDataThrowsOnUnauthorized(
-        urlRequester: URLRequesterMock,
-        sut: MUCClient
-    ) async throws {
-        urlRequester.setResponseStatusCode(401)
-
-        await #expect(
-            throws: MUCClientError.unauthorized,
-            performing: {
-                let _: MUCDataResponse<Token> = try await sut.request(
-                    url: Constants.url,
-                    method: .get,
-                    body: Constants.token,
-                    headers: [:]
-                )
-            }
-        )
-    }
-
-    
-    // MARK: Test data sent and returned
-    @Test(
-        "Request sending no data and retrieving no data sends and returns expected values",
-        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
-    )
-    func requestSendNoDataRetrieveNoDataSendsReturnsAsExpected(
-        urlRequester: URLRequesterMock,
-        sut: MUCClient
-    ) async throws {
-        // Arrange
-        urlRequester.setResponseHeaders(Constants.responseHeaders)
-        
-        // Act
-        let response = try await sut.request(
-            url: Constants.url,
-            method: .get,
-            headers: [:]
-        )
-        
-        // Assert
-        #expect(urlRequester.requestedURL == Constants.url)
-        #expect(urlRequester.requestedHTTPMethod == .get)
-        
-        let responseHeaders = try #require(response.headers)
-        #expect(response.statusCode == 200)
-        #expect(responseHeaders.isEqual(to: Constants.responseHeaders))
-    }
     
     @Test(
-        "Request sending no data and retrieving data sends and returns expected values",
-        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
-    )
-    func requestSendNoDataRetrieveDataSendsReturnsAsExpected(
-        urlRequester: URLRequesterMock,
-        sut: MUCClient
-    ) async throws {
-        // Arrange
-        let tokenData = try Self.encoder.encode(Constants.token)
-        urlRequester.setResponseData(tokenData)
-        urlRequester.setResponseHeaders(Constants.responseHeaders)
-        
-        // Act
-        let response: MUCDataResponse<Token> = try await sut.request(
-            url: Constants.url,
-            method: .get,
-            headers: [:]
-        )
-        
-        // Assert
-        #expect(urlRequester.requestedURL == Constants.url)
-        #expect(urlRequester.requestedHTTPMethod == .get)
-        
-        let responseHeaders = try #require(response.headers)
-        #expect(response.statusCode == 200)
-        #expect(response.decodedData == Constants.token)
-        #expect(responseHeaders.isEqual(to: Constants.responseHeaders))
-    }
-    
-    @Test(
-        "Requests sending data and retrieving no data sends and returns expected values",
-        arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
-    )
-    func requestSendDataRetrieveNoDataSendsReturnsAsExpected(
-        urlRequester: URLRequesterMock,
-        sut: MUCClient
-    ) async throws {
-        // Arrange
-        let tokenData = try Self.encoder.encode(Constants.token)
-        urlRequester.setResponseData(tokenData)
-        urlRequester.setResponseHeaders(Constants.responseHeaders)
-        
-        // Act
-        let response = try await sut.request(
-            url: Constants.url,
-            method: .get,
-            body: Constants.token,
-            headers: [:]
-        )
-        
-        // Assert
-        #expect(urlRequester.requestedURL == Constants.url)
-        #expect(urlRequester.requestedHTTPMethod == .get)
-        
-        let responseHeaders = try #require(response.headers)
-        #expect(response.statusCode == 200)
-        #expect(responseHeaders.isEqual(to: Constants.responseHeaders))
-    }
-    
-    @Test(
-        "Request sending data and retrieving data sends and returns expected values",
+        "Request sends and returns expected values",
         arguments: [Self.makeBaseSut(), Self.makeAuthSut()]
     )
     func requestSendDataRetrieveDataSendsReturnsAsExpected(
@@ -392,7 +106,7 @@ struct MUCClientTests {
         urlRequester.setResponseHeaders(Constants.responseHeaders)
         
         // Act
-        let response: MUCDataResponse<Token> = try await sut.request(
+        let response = try await sut.request(
             url: Constants.url,
             method: .get,
             body: Constants.token,
@@ -405,7 +119,7 @@ struct MUCClientTests {
         
         let responseHeaders = try #require(response.headers)
         #expect(response.statusCode == 200)
-        #expect(response.decodedData == Constants.token)
+        #expect(try response.decode(Token.self) == Constants.token)
         #expect(responseHeaders.isEqual(to: Constants.responseHeaders))
     }
 }

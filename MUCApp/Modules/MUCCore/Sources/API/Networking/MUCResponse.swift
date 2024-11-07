@@ -1,14 +1,9 @@
 import Foundation
 
-public struct MUCResponse: @unchecked Sendable {
-    public let statusCode: Int?
-    public let headers: [AnyHashable: Any]?
-    
-    public init(
-        statusCode: Int?,
-        headers: [AnyHashable : Any]?
-    ) {
-        self.statusCode = statusCode
-        self.headers = headers
-    }
+public protocol MUCResponse: Sendable {
+    var data: Data { get }
+    var statusCode: Int? { get }
+    var headers: [AnyHashable: Any]? { get }
+
+    func decode<T: Decodable>(_ type: T.Type) throws -> T
 }
