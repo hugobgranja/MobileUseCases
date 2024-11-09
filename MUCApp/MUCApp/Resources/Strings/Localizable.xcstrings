@@ -68,7 +68,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "There was a problem processing your login.\\nPlease try again."
+            "value" : "There was a problem processing your login. Please try again."
           }
         }
       }

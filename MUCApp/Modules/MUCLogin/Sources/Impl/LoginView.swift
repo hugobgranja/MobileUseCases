@@ -23,7 +23,7 @@ public struct LoginView: View {
     public var body: some View {
         ZStack {
             MUCGradientView()
-            
+
             VStack {
                 AppLogoView(width: 150, height: 150)
                     .symbolEffect(.bounce, options: .nonRepeating)
@@ -57,6 +57,8 @@ public struct LoginView: View {
                 .padding(.top, 10)
             }
             .padding(.horizontal, 40)
+
+            MUCProgressView(isLoading: viewModel.isLoading)
         }
         .overlayError($viewModel.errorState)
         .onChange(of: viewModel.event, initial: false) { _, new in handleEvent(new)

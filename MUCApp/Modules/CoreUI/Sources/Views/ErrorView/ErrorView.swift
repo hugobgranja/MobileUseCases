@@ -13,11 +13,11 @@ struct ErrorView: View {
                     VStack(spacing: 24) {
                         Text(title)
                             .font(.headline)
-                            .foregroundColor(.red)
+                            .foregroundColor(Color(.systemRed))
 
                         Text(errorMessage)
                             .font(.body)
-                            .foregroundColor(.white)
+                            .foregroundColor(.primary)
                             .multilineTextAlignment(.center)
 
                         PrimaryButtonView(buttonTitle) {
@@ -27,7 +27,7 @@ struct ErrorView: View {
                     }
                     .padding(24)
                     .frame(maxWidth: .infinity)
-                    .background(Color.black.opacity(0.8))
+                    .background(Color(.systemGray6))
                     .cornerRadius(12)
                     .shadow(radius: 10)
                     .padding(40)
