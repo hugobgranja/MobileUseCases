@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import CoreUI
 
 @main
 struct MUCApp: App {
@@ -18,15 +19,18 @@ struct MUCApp: App {
     }()
 
     private let container = AppContainer()
+    private let theme: Theme
     private let appCoordinator: AppCoordinator
 
     init() {
         appCoordinator = container.resolve(AppCoordinator.self)
+        theme = container.resolve(Theme.self)
     }
 
     var body: some Scene {
         WindowGroup {
             appCoordinator.getInitialView()
+                .environment(\.theme, theme)
         }
         .modelContainer(sharedModelContainer)
     }

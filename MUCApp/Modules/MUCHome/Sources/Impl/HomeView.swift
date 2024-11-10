@@ -13,7 +13,7 @@ public struct HomeView: View {
     public var body: some View {
         Text("Home")
 
-        PrimaryButtonView("Go to detail") {
+        MUCButtonView("Go to detail") {
             navDelegate.onDetail()
         }
     }

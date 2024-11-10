@@ -9,13 +9,10 @@ public struct MUCProgressView: View {
 
     public var body: some View {
         if isLoading {
-            ProgressView()
-                .background {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color(.systemGray6))
-                        .frame(width: 100, height: 100)
-                        .shadow(radius: 5)
-                }
+            DialogView {
+                ProgressView()
+                    .padding()
+            }
         }
     }
 }

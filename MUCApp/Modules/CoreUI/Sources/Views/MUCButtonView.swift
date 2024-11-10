@@ -1,6 +1,7 @@
 import SwiftUI
 
-public struct PrimaryButtonView: View {
+public struct MUCButtonView: View {
+    @Environment(\.theme) private var theme
     private let text: String
     private let action: () -> Void
 
@@ -15,16 +16,16 @@ public struct PrimaryButtonView: View {
     public var body: some View {
         Button(action: action) {
             Text(text)
-                .foregroundColor(.white)
+                .foregroundStyle(theme.buttonTextPrimary)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color(.black))
-                .cornerRadius(10)
+                .background(theme.buttonBackgroundPrimary)
+                .cornerRadius(theme.cornerRadius)
         }
     }
 }
 
 #Preview {
-    PrimaryButtonView("Text") {}
+    MUCButtonView("Text") {}
 }

@@ -1,6 +1,7 @@
 import SwiftUI
 
 public struct AppLogoView: View {
+    @Environment(\.theme) private var theme
     private let width: CGFloat
     private let height: CGFloat
 
@@ -14,7 +15,7 @@ public struct AppLogoView: View {
             .resizable()
             .scaledToFit()
             .frame(width: width, height: height)
-            .foregroundStyle(.black, .blue)
+            .foregroundStyle(theme.logoPrimary, theme.logoSecondary)
     }
 }
 

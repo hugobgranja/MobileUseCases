@@ -108,15 +108,9 @@ package.targets.append(contentsOf: [
         dependencies: [
             "CoreUI",
             "MUCLoginAPI",
-            "MUCLoginMocks",
             "MUCCoreMocks"
         ],
         path: "MUCLogin/Sources/Impl"
-    ),
-    .target(
-        name: "MUCLoginMocks",
-        dependencies: ["MUCLoginAPI"],
-        path: "MUCLogin/Mocks"
     ),
     .testTarget(
         name: "MUCLoginTests",

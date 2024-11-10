@@ -1,5 +1,6 @@
-import Foundation
 import BackpackDI
+import CoreUI
+import Foundation
 import MUCLoginImpl
 
 @MainActor
@@ -9,6 +10,10 @@ public final class AppAssembler {
             AppCoordinator(loginViewFactory: { loginNavDelegate in
                 r.resolve(LoginView.self, arguments: loginNavDelegate)
             })
+        }
+
+        container.register(Theme.self) { _ in
+            return ThemeImpl()
         }
     }
 }

@@ -1,10 +1,10 @@
 import SwiftUI
 
 public struct PasswordFieldView: View {
+    @Environment(\.theme) private var theme
     private let placeholder: String
     @Binding private var password: String
     @State private var isSecure: Bool = true
-    
     
     private var secureToggleImage: String {
         isSecure ? "eye.slash.fill" : "eye.fill"
@@ -27,6 +27,7 @@ public struct PasswordFieldView: View {
                 isSecure.toggle()
             }) {
                 Image(systemName: secureToggleImage)
+                    .foregroundStyle(theme.iconPrimary)
             }
         }
     }

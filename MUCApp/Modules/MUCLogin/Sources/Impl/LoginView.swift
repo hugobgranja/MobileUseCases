@@ -1,11 +1,11 @@
 import CoreUI
 import MUCLoginAPI
-import MUCLoginMocks
 import MUCCoreAPI
 import MUCCoreMocks
 import SwiftUI
 
 public struct LoginView: View {
+    @Environment(\.theme) private var theme
     @Bindable var viewModel: LoginViewModel
     private weak var navDelegate: (any LoginNavDelegate)?
     private let stringRepository: StringRepository
@@ -31,17 +31,16 @@ public struct LoginView: View {
                 Text(stringRepository.get(LSKey.title))
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .foregroundColor(.primary)
+                    .foregroundStyle(theme.textPrimary)
                     .padding(.top, 40)
                     .padding(.bottom, 4)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 Text(stringRepository.get(LSKey.subtitle))
                     .font(.headline)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(theme.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-             
                 TextField(stringRepository.get(LSKey.email), text: $viewModel.email)
                     .modifier(EmailFieldViewModifier())
                     .modifier(FormFieldViewModifier())
@@ -49,7 +48,7 @@ public struct LoginView: View {
                 PasswordFieldView(stringRepository.get(LSKey.password), password: $viewModel.password)
                     .modifier(FormFieldViewModifier())
 
-                PrimaryButtonView(stringRepository.get(LSKey.primaryButtonTitle)) {
+                MUCButtonView(stringRepository.get(LSKey.primaryButtonTitle)) {
                     Task {
                         await viewModel.login()
                     }
@@ -82,7 +81,7 @@ public struct LoginView: View {
     )
     LoginView(
         viewModel: viewModel,
-        navDelegate: LoginNavDelegateMock(),
+        navDelegate: nil,
         stringRepository: StringRepositoryMock()
     )
 }

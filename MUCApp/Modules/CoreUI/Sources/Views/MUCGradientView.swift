@@ -1,7 +1,8 @@
 import SwiftUI
 
 public struct MUCGradientView: View {
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.theme) private var theme
 
     public init() {}
 
@@ -12,10 +13,7 @@ public struct MUCGradientView: View {
                     [0, 0], [1, 0],
                     [0, 1], [1, 1]
                 ],
-                colors: [
-                    .blue, .indigo,
-                    .black, .teal
-                ]
+                colors: theme.appBackgroundGradientDark
             )
             .edgesIgnoringSafeArea(.all)
         }
@@ -25,10 +23,7 @@ public struct MUCGradientView: View {
                     [0, 0], [1, 0],
                     [0, 1], [1, 1]
                 ],
-                colors: [
-                    .blue, .cyan,
-                    .white, .mint
-                ]
+                colors: theme.appBackgroundGradientLight
             )
             .edgesIgnoringSafeArea(.all)
         }
